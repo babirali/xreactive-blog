@@ -6,12 +6,13 @@ import 'font-awesome/css/font-awesome.css'
 import jQuery from 'jquery'
 import 'bootstrap'
 import Popper from 'popper.js';
+import Home from './page/home/Home';
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <p>test</p>
+      <div >
+        <Home />
       </div>
     );
   }
