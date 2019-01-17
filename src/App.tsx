@@ -19,6 +19,12 @@ class App extends Component {
         <div>
           <NavBar />
           {/* <Link className="nav-link" to="/">Home</Link> */}
+          <div className="jumbotron">
+            <div className="container">
+              <h1 className="display-4">Hello, world!</h1>
+              <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            </div>
+          </div>
           <div className="container">
             <Route path="/" exact component={Home} />
             <Route path="/about" exact component={About} />

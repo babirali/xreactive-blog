@@ -14,6 +14,8 @@ class Home extends Component {
                 <small>Secondary Text</small>
           </h1>
           <Post />
+          <Post />
+          <Post />
           <Pagination />
         </div>
         <SideBar />

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class Post extends Component<any, any> {
     render() {
         return (
-            <div className="card flex-row border-0 shadow-sm bg-white rounded">
+            <div className="card flex-row border-0 shadow-sm bg-white rounded mb-4">
                 {/* <img className="card-img-top" src="http://placehold.it/750x300" alt="Card image cap" /> */}
                 <div className="card-header border-0 padding-0">
                     <img src="//placehold.it/200" alt="" />
