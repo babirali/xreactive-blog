@@ -6,6 +6,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.9 !important;
+  font-family: "Open Sans",sans-serif !important;
+  color: #757575 !important;
+  font-weight: 300 !important;
 }
 
 code {
