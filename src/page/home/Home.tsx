@@ -9,10 +9,16 @@ class Home extends Component {
   render() {
     return (
       <div className="row">
+        <div className="jumbotron text-dark">
+          <div className="container">
+            <h1 className="display-4">Hello, world!</h1>
+            <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+          </div>
+        </div>
         <div className="col-md-8">
-          <h1 className="my-4">Page Heading
+          {/* <h1 className="my-4">Page Heading
                 <small>Secondary Text</small>
-          </h1>
+          </h1> */}
           <Post />
           <Post />
           <Post />

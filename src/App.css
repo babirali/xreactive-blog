@@ -1,15 +1,14 @@
 body {
-    padding-top: 54px;
-    background-color: #fafbfb !important; 
-  }
-  
-  @media (min-width: 992px) {
-    body {
-      padding-top: 56px;
-    }
-  }
-
-  .bg-gray {
-    background-color: #fafbfb;
+  padding-top: 54px;
+  background-color: #fafbfb !important;
 }
-  
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
+.bg-gray {
+  background-color: #fafbfb;
+}
