@@ -4,8 +4,9 @@ import NavBar from '../../component/nav-bar/NavBar';
 import Post from '../../component/post/Post';
 import Pagination from '../../component/pagination/Pagination';
 import Footer from '../../component/footer/Footer';
+import { connect } from 'react-redux';
 
-class Home extends Component {
+class Home extends Component<any, any> {
   render() {
     return (
       <div className="row">
@@ -19,9 +20,9 @@ class Home extends Component {
           {/* <h1 className="my-4">Page Heading
                 <small>Secondary Text</small>
           </h1> */}
-          <Post />
-          <Post />
-          <Post />
+          {this.props.post.map((post: any,index:number) =>
+            <Post post={post} key={index} />
+          )}
           <Pagination />
         </div>
         <SideBar />
@@ -30,4 +31,8 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = (state: any) => ({
+  post: state.post
+})
+
+export default connect(mapStateToProps)(Home);

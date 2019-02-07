@@ -12,21 +12,30 @@ import Footer from './component/footer/Footer';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import About from './page/about/About';
 import PostDetail from './page/post-detail/PostDetail';
+import AddPost from './page/add-post/AddPost';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import XApp from "./redux/reducers/xapp";
+//initialize store
+let store = createStore(XApp);
+
 class App extends Component {
   render() {
     return (
-      <Router >
-        <div>
-          <NavBar />
-          {/* <Link className="nav-link" to="/">Home</Link> */}
-          <div className="container">
-            <Route path="/" exact component={Home} />
-            <Route path="/about" exact component={About} />
-            <Route path="/post/:id?" exact component={PostDetail} />
+      <Provider store={store}>
+        <Router >
+          <div>
+            <NavBar />
+            <div className="container" style={{ paddingBottom: '30px' }}>
+              <Route path="/" exact component={Home} />
+              <Route path="/about" exact component={About} />
+              <Route path="/post/:id?" exact component={PostDetail} />
+              <Route path="/addpost" exact component={AddPost} />
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
-      </Router>
+        </Router>
+      </Provider>
     );
   }
 }
