@@ -4,6 +4,9 @@ const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
 
+const initDb = require("./db").initDb;
+const getDb = require("./db").getDb;
+
 // Get our API routes
 const api = require('./routes/api');
 
@@ -27,7 +30,7 @@ app.get('*', (req, res) => {
 /**
  * Get port from environment and store in Express.
  */
-const port = process.env.PORT || '3000';
+const port = process.env.PORT || '3001';
 app.set('port', port);
 
 /**
@@ -38,4 +41,7 @@ const server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.listen(port, () => console.log(`API running on localhost:${port}`));
+
+initDb(function (err) {
+    server.listen(port, () => console.log(`API running on localhost:${port}`));
+});

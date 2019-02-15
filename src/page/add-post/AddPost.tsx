@@ -32,9 +32,13 @@ class AddPost extends Component<any, any> {
                     <CKEditor data={this.state.content}
                         onChange={(evt: any) => console.log(evt.editor.getData())}
                     />
-                    <button type="submit" className="btn btn-primary">Save</button>
-                    <button type="button" className="btn btn-primary">Publish</button>
-                    <button type="button" className="btn btn-primary">Delete</button>
+                    <div className="pull-right pt-3">
+                        <button type="submit" className="btn btn-primary mr-2">Save</button>
+                        <button type="button" className="btn btn-primary mr-2">Publish</button>
+                        <button type="button" className="btn btn-primary">Delete</button>
+                    </div>
+                    <div className="clearfix" />
+
                 </form>
             </div>
         );
