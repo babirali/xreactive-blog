@@ -10,12 +10,15 @@ router.get('/', (req, res) => {
     if (err) throw err
     res.send(result);
   })
- 
+
 });
 
 router.post('/savepost', (req, res) => {
-  console.log(req.body);
-  res.send('api works');
+  const db = getDb();
+  db.collection("posts").insertOne(req.body, function (err, res) {
+    if (err) throw err;
+  });
+  res.send(req.body);
 });
 
 module.exports = router;

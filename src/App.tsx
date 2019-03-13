@@ -15,11 +15,14 @@ import PostDetail from './page/post-detail/PostDetail';
 import AddPost from './page/add-post/AddPost';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import XApp from "./redux/reducers/xapp";
+import reducer from "./redux/reducers/root";
 //initialize store
-let store = createStore(XApp);
+let store = createStore(reducer);
 
 class App extends Component {
+  constructor(props: any) {
+    super(props)
+  }
   render() {
     return (
       <Provider store={store}>

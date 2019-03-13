@@ -3,15 +3,32 @@ import { connect } from 'react-redux';
 const CKEditor = require('ckeditor4-react');
 const axios = require('axios');
 
-import { withRouter } from 'react-router-dom'
-
 class AddPost extends Component<any, any> {
     constructor(props: any) {
         super(props)
         this.state = {
+            heading: '',
+            by: '',
+            date: '',
             content: ''
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    handleChange(event: any) {
+        this.setState({ [event.target.name]: event.target.value })
+    }
+
+    handleSubmit(event: any) {
+        event.preventDefault();
+        axios.post('http://localhost:3001/api/savepost', this.state).then(function (response: any) {
+            console.log(response);
+        }).catch(function (error: any) {
+            console.log(error);
+        });
+    }
+
     render() {
         return (
             <div>
@@ -19,21 +36,21 @@ class AddPost extends Component<any, any> {
                 <form>
                     <div className="form-group">
                         <label htmlFor="heading">Heading</label>
-                        <input type="text" className="form-control" id="heading" aria-describedby="emailHelp" placeholder="Heading" />
+                        <input type="text" className="form-control" name="heading" value={this.state.heading} onChange={this.handleChange} id="heading" aria-describedby="heading" placeholder="Heading" />
                     </div>
                     <div className="form-group">
                         <label htmlFor="by">By</label>
-                        <input type="text" className="form-control" id="by" placeholder="By" />
+                        <input type="text" className="form-control" name="by" value={this.state.by} onChange={this.handleChange} id="by" placeholder="By" />
                     </div>
                     <div className="form-group">
                         <label htmlFor="date">Date</label>
-                        <input type="text" className="form-control" id="date" placeholder="Date" />
+                        <input type="text" className="form-control" name="date" value={this.state.date} onChange={this.handleChange} id="date" placeholder="Date" />
                     </div>
                     <CKEditor data={this.state.content}
-                        onChange={(evt: any) => console.log(evt.editor.getData())}
+                        onChange={(evt: any) => this.setState({ content: evt.editor.getData() })}
                     />
                     <div className="pull-right pt-3">
-                        <button type="submit" className="btn btn-primary mr-2">Save</button>
+                        <button type="submit" className="btn btn-primary mr-2" onClick={this.handleSubmit}>Save</button>
                         <button type="button" className="btn btn-primary mr-2">Publish</button>
                         <button type="button" className="btn btn-primary">Delete</button>
                     </div>

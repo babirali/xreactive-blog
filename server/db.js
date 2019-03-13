@@ -8,13 +8,13 @@ function initDb(callback) {
         console.warn("Trying to init DB again!");
         return callback(null, _db);
     }
-    client.connect("mongodb://localhost:27017/local", connected);
+    client.connect("mongodb://localhost:27017/xreactive", connected);
     function connected(err, client) {
         if (err) {
             return callback(err);
         }
         console.log("DB initialized - connected to: ");
-        _db = client.db('local');
+        _db = client.db('xreactive');
         return callback(null, _db);
     }
 }

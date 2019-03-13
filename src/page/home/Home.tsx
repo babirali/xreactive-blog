@@ -7,6 +7,11 @@ import Footer from '../../component/footer/Footer';
 import { connect } from 'react-redux';
 
 class Home extends Component<any, any> {
+  constructor(props: any) {
+    super(props)
+    console.log(props);
+    this.props.getPost({type:'get'});
+  }
   render() {
     return (
       <div className="row">
@@ -20,7 +25,7 @@ class Home extends Component<any, any> {
           {/* <h1 className="my-4">Page Heading
                 <small>Secondary Text</small>
           </h1> */}
-          {this.props.post.map((post: any,index:number) =>
+          {this.props.post.map((post: any, index: number) =>
             <Post post={post} key={index} />
           )}
           <Pagination />
@@ -32,7 +37,10 @@ class Home extends Component<any, any> {
 }
 
 const mapStateToProps = (state: any) => ({
-  post: state.post
+  post: state.post.post
 })
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = (dispatch:any) => ({
+  getPost : dispatch
+});
+export default connect(mapStateToProps,mapDispatchToProps)(Home);
