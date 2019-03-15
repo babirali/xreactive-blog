@@ -21,4 +21,23 @@ router.post('/savepost', (req, res) => {
   res.send(req.body);
 });
 
+router.get('/getpost', (req, res) => {
+  const db = getDb();
+  db.collection("posts").find().toArray(function (err, result) {
+    if (err) throw err
+    res.send(result);
+  })
+});
+router.get('/getpostbyid/:id', (req, res) => {
+  console.log(req.params.id);
+  const db = getDb();
+  var object = db.collection("posts").findOne({ heading: 'haading' });
+  console.log(object)
+  if (object) {
+    res.send(object);
+  }
+  // console.log(req.params.id);
+  // res.send('result');
+});
+
 module.exports = router;

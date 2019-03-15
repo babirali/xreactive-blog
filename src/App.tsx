@@ -16,8 +16,19 @@ import AddPost from './page/add-post/AddPost';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from "./redux/reducers/root";
+const test : any = {
+  post: {
+    loading: true,
+    post: [
+      {
+        img: 'init',
+        title: 'init'
+      }
+    ]
+  }
+}
 //initialize store
-let store = createStore(reducer);
+let store = createStore(reducer, test);
 
 class App extends Component {
   constructor(props: any) {

@@ -4,7 +4,7 @@ import './SideBar.css'
 class SideBar extends Component<any, any> {
     render() {
         return (
-            <div className="col-md-4">
+            <div className="col-md-4 pr-0">
                 <div className="card mb-4 border-0">
                     <h5 className="card-header border-0 text-uppercase text-dark">Search</h5>
                     <div className="card-body">
