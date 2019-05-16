@@ -16,6 +16,7 @@ import AddPost from './page/add-post/AddPost';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from "./redux/reducers/root";
+import ListPost from './page/list-post/ListPost';
 const test : any = {
   post: {
     loading: true,
@@ -45,6 +46,7 @@ class App extends Component {
               <Route path="/about" exact component={About} />
               <Route path="/post/:id?" exact component={PostDetail} />
               <Route path="/addpost" exact component={AddPost} />
+              <Route path="/listpost" exact component={ListPost} />
             </div>
             <Footer />
           </div>

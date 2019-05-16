@@ -4,9 +4,9 @@ import './NavBar.css'
 class NavBar extends Component<any, any> {
     render() {
         return (
-            <nav className="navbar navbar-expand-lg navbar-dark bg-color fixed-top">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-color">
                 <div className="container">
-                    <a className="navbar-brand" href="#">XReactive</a>
+                    <Link className="navbar-brand" to="/">XReactive</Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon" />
                     </button>
@@ -19,8 +19,7 @@ class NavBar extends Component<any, any> {
                                 <Link className="nav-link" to="/">Home</Link>
                             </li>
                             <li className="nav-item">
-                                {/* <a className="nav-link" href="#">About</a> */}
-                                <Link className="nav-link" to="/about">About</Link>
+                                <Link className="nav-link" to="/about">Angular</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/post/2">Post Detail</Link>

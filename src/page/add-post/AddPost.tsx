@@ -6,14 +6,7 @@ const axios = require('axios');
 class AddPost extends Component<any, any> {
     constructor(props: any) {
         super(props)
-        this.state = {
-            heading: '',
-            by: '',
-            date: '',
-            img: '',
-            mainImg: '',
-            content: ''
-        }
+        this.state = {}
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -24,7 +17,7 @@ class AddPost extends Component<any, any> {
 
     handleSubmit(event: any) {
         event.preventDefault();
-        axios.post('http://localhost:3001/api/savepost', this.state).then(function (response: any) {
+        axios.post(process.env.REACT_APP_API_ENDPOINT + 'api/posts/save', this.state).then(function (response: any) {
             console.log(response);
         }).catch(function (error: any) {
             console.log(error);
@@ -80,8 +73,9 @@ class AddPost extends Component<any, any> {
     }
 }
 
-const mapStateToProps = (state: any) => ({
-    todos: state.post
-})
+// const mapStateToProps = (state: any) => ({
+//     todos: state.post
+// })
 
-export default connect(mapStateToProps)(AddPost);
+// export default connect(mapStateToProps)(AddPost);
+export default AddPost;

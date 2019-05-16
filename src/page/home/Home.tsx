@@ -10,16 +10,11 @@ class Home extends Component<any, any> {
   constructor(props: any) {
     super(props)
     this.state = {
-      post: [
-        {
-          img: 'test',
-          title: 'test'
-        }
-      ]
+      post: []
     }
   }
   componentWillMount() {
-    axios.get('http://localhost:3001/api/getpost').then((response: any) => {
+    axios.get(process.env.REACT_APP_API_ENDPOINT + 'posts').then((response: any) => {
       console.log(response);
       this.setState({ post: response.data });
     }).catch((error: any) => {
