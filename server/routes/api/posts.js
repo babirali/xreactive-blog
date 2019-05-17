@@ -13,6 +13,10 @@ router.post('/save', auth.optional, (req, res, next) => {
         console.log('saved');
         return res.json({})
     })
+});
 
+router.get('/get/:id', (req, res, next) => {
+
+    Posts.findById(req.params.id, function (err, post) { res.json(post); });
 });
 module.exports = router;
