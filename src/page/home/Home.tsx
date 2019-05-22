@@ -5,6 +5,7 @@ import Pagination from '../../component/pagination/Pagination';
 import { connect } from 'react-redux';
 const axios = require('axios');
 import './Home.css'
+import { Link } from 'react-router-dom';
 
 class Home extends Component<any, any> {
   constructor(props: any) {
@@ -23,23 +24,25 @@ class Home extends Component<any, any> {
   }
   render() {
     return (
-      <div className="row">
-        <div className="jumbotron text-dark">
+      <div>
+        <div className="row">
+          {/* <div className="jumbotron text-dark">
           <div className="container">
             <h1 className="display-4">Hello, world!</h1>
             <p className="lead"><button className="btn btn-primary" onClick={() => this.props.dispatch({ type: 'save' })}>Add</button></p>
           </div>
-        </div>
-        <div className="col-md-8 pl-0">
-          {/* <h1 className="my-4">Page Heading
+        </div> */}
+          <div className="col-md-8 pl-0">
+            {/* <h1 className="my-4">Page Heading
                 <small>Secondary Text</small>
           </h1> */}
-          {this.state.post.map((post: any, index: number) =>
-            <Post post={post} key={index} />
-          )}
-          <Pagination />
+            {this.state.post.map((post: any, index: number) =>
+              <Post post={post} key={index} />
+            )}
+            <Pagination />
+          </div>
+          <SideBar />
         </div>
-        <SideBar />
       </div>
     );
   }

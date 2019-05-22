@@ -17,7 +17,7 @@ class AddPost extends Component<any, any> {
 
     handleSubmit(event: any) {
         event.preventDefault();
-        axios.post(process.env.REACT_APP_API_ENDPOINT + 'api/posts/save', this.state).then(function (response: any) {
+        axios.post(process.env.REACT_APP_API_ENDPOINT + 'posts/save', this.state).then(function (response: any) {
             console.log(response);
         }).catch(function (error: any) {
             console.log(error);
