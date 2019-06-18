@@ -55,8 +55,19 @@ class AddPost extends Component<any, any> {
                             </div>
                         </div>
                         <div className="col-md-12">
-                            <CKEditor data={this.state.content}
+                            <CKEditor
+                                type="classic"
+                                data={this.state.content}
                                 onChange={(evt: any) => this.setState({ content: evt.editor.getData() })}
+                                config={{
+                                    filebrowserBrowseUrl: process.env.REACT_APP_API_ENDPOINT + 'posts/browse',
+                                    filebrowserUploadUrl: process.env.REACT_APP_API_ENDPOINT + 'posts/upload1',
+                                    // allowedContent: {script: true,}
+                                    allowedContent: 'script',
+                                    // extraAllowedContent: 'script'
+                                }}
+
+
                             />
                             <div className="pull-right pt-3">
                                 <button type="submit" className="btn btn-primary mr-2" onClick={this.handleSubmit}>Save</button>

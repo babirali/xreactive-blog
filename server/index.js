@@ -33,8 +33,11 @@ require('./models/posts');
 require('./config/passport');
 app.use(require('./routes'));
 
+app.use(express.static(path.join(__dirname, 'routes/api/uploads')))
+
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
+    console.log(__dirname);
     res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 

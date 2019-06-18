@@ -13,7 +13,7 @@ class PostDetail extends Component<any, any> {
     }
   }
   componentWillMount() {
-    axios.get('http://localhost:3001/api/getpostbyid/' + this.props.match.params.id).then((response: any) => {
+    axios.get(process.env.REACT_APP_API_ENDPOINT + 'posts/get/' + this.props.match.params.id).then((response: any) => {
       this.setState({ post: response.data });
     }).catch((error: any) => {
       console.log(error);
@@ -32,6 +32,7 @@ class PostDetail extends Component<any, any> {
           <hr />
           <img className="img-fluid rounded" src="http://placehold.it/900x300" alt="" />
           <div dangerouslySetInnerHTML={{ __html: this.state.post.content }}></div>
+          <script src="https://gist.github.com/babirali/0327b7988eab28c22cdaae51f6932efd.js"></script>
           {/* <PostComment />
               <ListComment /> */}
         </div>
