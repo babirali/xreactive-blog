@@ -7,7 +7,13 @@ const axios = require('axios');
 import './ListPost.css'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
-
+import { ToastContainer, toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { spinnerService } from '../../service/spinner';
+import { EOVERFLOW } from 'constants';
+import { error } from 'util';
 class ListPost extends Component<any, any> {
     constructor(props: any) {
         super(props)
@@ -15,41 +21,61 @@ class ListPost extends Component<any, any> {
             post: []
         }
     }
-    // componentWillMount() {
-    //     axios.get(process.env.REACT_APP_API_ENDPOINT + 'api/posts').then((response: any) => {
-    //         console.log(response);
-    //         this.setState({ post: response.data });
-    //     }).catch((error: any) => {
-    //         console.log(error);
-    //     });
-    // }
+    delete = (id: any) => {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Are you sure to do this.',
+            closeOnClickOutside: true,
+            closeOnEscape: true,
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        axios.get(process.env.REACT_APP_API_ENDPOINT + 'posts/delete/' + id).then((response: any) => {
+                            spinnerService.showLoading(true);
+                            toast.success('Deleted Successfully ')
+                            axios.get(process.env.REACT_APP_API_ENDPOINT + 'posts')
+                                .then((res: any) => {
+                                    this.setState({
+                                        post: res.data,
+                                        loading: false
+                                    })
+                                    spinnerService.showLoading(false);
+                                })
+                        }).catch((error: any) => {
+                            console.log(error);
+                            spinnerService.showLoading(false);
+                        });
+                    }
+                },
+                {
+                    label: 'No',
+                    onClick: () => { }
+                }
+            ]
+        });
+    }
     render() {
         const columns = [{
-            Header: 'Id',
-            accessor: '_id',
-            Cell: (row: any) => (<a href="">{row.original._id}</a>)
-        }, {
             Header: 'Heading',
-            accessor: 'heading'
-        }, {
-            Header: 'Image',
-            accessor: 'img'
-        }, {
-            Header: 'Content',
-            accessor: 'content'
+            accessor: 'heading',
+            Cell: (row: any) => (<Link className="link small" to={'/post/' + row.original._id}>{row.original.heading}</Link>)
         }, {
             Header: 'Post By',
-            accessor: 'postBy'
+            accessor: 'postBy',
+            width: 100
         }, {
             Header: 'Date',
-            accessor: 'date'
-        }
-            , {
+            accessor: 'date',
+            width: 100
+        }, {
             Header: 'Actions',
-            Cell: (row: any) => (<button className="btn btn-primary">test</button>)
+            Cell: (row: any) => (<div className="text-center"><i onClick={() => this.delete(row.original._id)} className="fa fa-trash clr-red" aria-hidden="true"></i></div>),
+            width: 65
         }]
         return (
             <div className="row">
+                <ToastContainer />
                 <div className="col-md-12 pt-4">
                     <ReactTable
                         data={this.state.post}
@@ -59,18 +85,20 @@ class ListPost extends Component<any, any> {
                         getTrProps={(state: any, rowinfo: any) => {
                             return {
                                 onClick: (e: any) => {
-                                    console.log(rowinfo);
+                                    // console.log(rowinfo);
                                 }
                             }
                         }}
                         onFetchData={(state, instance) => {
-                            this.setState({ loading: true })
+                            spinnerService.showLoading(true);
                             axios.get(process.env.REACT_APP_API_ENDPOINT + 'posts')
                                 .then((res: any) => {
                                     this.setState({
-                                        post: res.data,
-                                        loading: false
+                                        post: res.data
                                     })
+                                    spinnerService.showLoading(false);
+                                }).catch((error: any) => {
+                                    spinnerService.showLoading(false);
                                 })
                         }}
                     />

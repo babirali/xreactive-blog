@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 const CKEditor = require('ckeditor4-react');
 const axios = require('axios');
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './AddPost.css'
+import { spinnerService } from '../../service/spinner';
+import { Observable, Subject } from 'rxjs';
 
 class AddPost extends Component<any, any> {
     constructor(props: any) {
@@ -9,24 +14,32 @@ class AddPost extends Component<any, any> {
         this.state = {}
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
+    } 
 
     handleChange(event: any) {
         this.setState({ [event.target.name]: event.target.value })
     }
 
     handleSubmit(event: any) {
+        spinnerService.showLoading(true);
         event.preventDefault();
-        axios.post(process.env.REACT_APP_API_ENDPOINT + 'posts/save', this.state).then(function (response: any) {
-            console.log(response);
-        }).catch(function (error: any) {
+        axios.post(process.env.REACT_APP_API_ENDPOINT + 'posts/save', this.state).then((response: any) => {
+            toast.success('Saved Successfully ')
+            // this.props.history.push('/listpost');
+            spinnerService.showLoading(false);
+        }).catch((error: any) => {
+            toast.error('Error')
             console.log(error);
         });
     }
+    notify = () => {
+        this.setState({ loading: true });
+    };
 
     render() {
         return (
             <div>
+                <ToastContainer />
                 <h1>Add Post</h1>
                 <form>
                     <div className="row">
@@ -37,7 +50,7 @@ class AddPost extends Component<any, any> {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="by">By</label>
-                                <input type="text" className="form-control" name="by" value={this.state.by} onChange={this.handleChange} id="by" placeholder="By" />
+                                <input type="text" className="form-control" name="postBy" value={this.state.postBy} onChange={this.handleChange} id="postBy" placeholder="Name" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="date">Date</label>
@@ -62,17 +75,13 @@ class AddPost extends Component<any, any> {
                                 config={{
                                     filebrowserBrowseUrl: process.env.REACT_APP_API_ENDPOINT + 'posts/browse',
                                     filebrowserUploadUrl: process.env.REACT_APP_API_ENDPOINT + 'posts/upload1',
-                                    // allowedContent: {script: true,}
-                                    allowedContent: 'script',
-                                    // extraAllowedContent: 'script'
                                 }}
 
 
                             />
                             <div className="pull-right pt-3">
                                 <button type="submit" className="btn btn-primary mr-2" onClick={this.handleSubmit}>Save</button>
-                                <button type="button" className="btn btn-primary mr-2">Publish</button>
-                                <button type="button" className="btn btn-primary">Delete</button>
+                                <button type="button" className="btn btn-primary mr-2" onClick={this.notify}>Publish</button>
                             </div>
                             <div className="clearfix" />
                         </div>

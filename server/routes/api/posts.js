@@ -25,11 +25,6 @@ router.post('/save', auth.optional, (req, res, next) => {
     })
 });
 
-router.post('/upload', upload.single('upload'), (req, res, next) => {
-    console.log(__dirname);
-    console.log(__filename);
-});
-
 router.post('/upload1', multipartMiddleware, (req, res, next) => {
     var fs = require('fs');
     fs.readFile(req.files.upload.path, function (err, data) {
@@ -56,12 +51,20 @@ router.get('/browse', auth.optional, (req, res, next) => {
         });
         console.log(__dirname);
         return res.json(files)
-        
+
     });
 });
 
 router.get('/get/:id', (req, res, next) => {
 
     Posts.findById(req.params.id, function (err, post) { res.json(post); });
+});
+
+router.get('/delete/:id', (req, res, next) => {
+    Posts.findOneAndRemove({ _id: req.params.id }).then(response => {
+        console.log(response)
+        return res.json('Deleted')
+    })
+        .catch(err => { console.error(err) })
 });
 module.exports = router;

@@ -17,7 +17,8 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from "./redux/reducers/root";
 import ListPost from './page/list-post/ListPost';
-const test : any = {
+import { spinnerService } from './service/spinner';
+const test: any = {
   post: {
     loading: true,
     post: [
@@ -31,15 +32,30 @@ const test : any = {
 //initialize store
 let store = createStore(reducer, test);
 
-class App extends Component {
+class App extends Component<any, any> {
   constructor(props: any) {
     super(props)
+    this.state = {
+      loading: false
+    }
+  }
+  componentDidMount() {
+    // subscribe to home component messages
+    spinnerService.getMessage().subscribe(value => {
+      this.setState({ loading: value })
+      console.log(value);
+    });
   }
   render() {
     return (
       <Provider store={store}>
         <Router >
           <div>
+            {this.state.loading ?
+              <div className="loading-overlay-show">
+                <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
+              </div>
+              : ''}
             <NavBar />
             <div className="container" style={{ paddingBottom: '30px' }}>
               <Route path="/" exact component={Home} />

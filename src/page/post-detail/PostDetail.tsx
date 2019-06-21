@@ -25,7 +25,7 @@ class PostDetail extends Component<any, any> {
         <div className="col-lg-8">
           <h1 className="mt-4">{this.state.post.heading}</h1>
           <p className="lead">
-            by <a href="#"> {this.state.post.by}</a>
+            by <a href="#"> {this.state.post.postBy}</a>
           </p>
           <hr />
           <p>Posted on {this.state.post.date}</p>
