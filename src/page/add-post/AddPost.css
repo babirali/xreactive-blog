@@ -10,9 +10,11 @@
     align-items: flex-start;
     z-index: 1005;
 }
-
 .loading-overlay-show > i {
     margin: auto 0;
     color: white;
     font-size: 60px;
+}
+.react-datepicker-wrapper {
+    display: block !important;
 }

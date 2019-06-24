@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import './AddPost.css'
 import { spinnerService } from '../../service/spinner';
 import { Observable, Subject } from 'rxjs';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class AddPost extends Component<any, any> {
     constructor(props: any) {
@@ -14,7 +16,7 @@ class AddPost extends Component<any, any> {
         this.state = {}
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    } 
+    }
 
     handleChange(event: any) {
         this.setState({ [event.target.name]: event.target.value })
@@ -35,6 +37,11 @@ class AddPost extends Component<any, any> {
     notify = () => {
         this.setState({ loading: true });
     };
+    handleDate = (date: any) => {
+        this.setState({
+            date: date
+        });
+    }
 
     render() {
         return (
@@ -54,7 +61,12 @@ class AddPost extends Component<any, any> {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="date">Date</label>
-                                <input type="text" className="form-control" name="date" value={this.state.date} onChange={this.handleChange} id="date" placeholder="Date" />
+                                {/* <input type="text" className="form-control" name="date" value={this.state.date} onChange={this.handleChange} id="date" placeholder="Date" /> */}
+                                <DatePicker
+                                    className="form-control"
+                                    selected={this.state.date}
+                                    onChange={this.handleDate}
+                                />
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -66,6 +78,10 @@ class AddPost extends Component<any, any> {
                                 <label htmlFor="date">Detail Image</label>
                                 <input type="text" className="form-control" name="mainImg" value={this.state.mainImg} onChange={this.handleChange} id="mainImg" placeholder="Image" />
                             </div>
+                            <div className="form-group">
+                                <label htmlFor="tags">Tags</label>
+                                <input type="text" className="form-control" name="tags" value={this.state.tags} onChange={this.handleChange} id="tags" placeholder="Tags" />
+                            </div>
                         </div>
                         <div className="col-md-12">
                             <CKEditor
@@ -76,8 +92,6 @@ class AddPost extends Component<any, any> {
                                     filebrowserBrowseUrl: process.env.REACT_APP_API_ENDPOINT + 'posts/browse',
                                     filebrowserUploadUrl: process.env.REACT_APP_API_ENDPOINT + 'posts/upload1',
                                 }}
-
-
                             />
                             <div className="pull-right pt-3">
                                 <button type="submit" className="btn btn-primary mr-2" onClick={this.handleSubmit}>Save</button>
