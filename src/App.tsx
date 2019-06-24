@@ -40,10 +40,8 @@ class App extends Component<any, any> {
     }
   }
   componentDidMount() {
-    // subscribe to home component messages
     spinnerService.getMessage().subscribe(value => {
       this.setState({ loading: value })
-      console.log(value);
     });
   }
   render() {

@@ -30,7 +30,7 @@ class PostDetail extends Component<any, any> {
           <hr />
           <p>Posted on {this.state.post.date}</p>
           <hr />
-          <img className="img-fluid rounded" src="http://placehold.it/900x300" alt="" />
+          <img className="img-fluid rounded" src={this.state.post.mainImg} alt="" />
           <div dangerouslySetInnerHTML={{ __html: this.state.post.content }}></div>
           <script src="https://gist.github.com/babirali/0327b7988eab28c22cdaae51f6932efd.js"></script>
           {/* <PostComment />

@@ -23,6 +23,7 @@ class AddPost extends Component<any, any> {
     }
 
     handleSubmit(event: any) {
+        console.log(this.state)
         spinnerService.showLoading(true);
         event.preventDefault();
         axios.post(process.env.REACT_APP_API_ENDPOINT + 'posts/save', this.state).then((response: any) => {
