@@ -16,7 +16,7 @@ class Home extends Component<any, any> {
   }
   componentWillMount() {
     axios.get(process.env.REACT_APP_API_ENDPOINT + 'posts').then((response: any) => {
-      console.log(response);
+      // console.log(response);
       this.setState({ post: response.data });
     }).catch((error: any) => {
       console.log(error);

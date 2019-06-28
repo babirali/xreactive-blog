@@ -12,12 +12,14 @@ import Footer from './component/footer/Footer';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import About from './page/about/About';
 import PostDetail from './page/post-detail/PostDetail';
-import AddPost from './page/add-post/AddPost';
+import AddPost from './page-admin/add-post/AddPost';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from "./redux/reducers/root";
-import ListPost from './page/list-post/ListPost';
+import ListPost from './page-admin/list-post/ListPost';
 import { spinnerService } from './service/spinner';
+import Login from './page/login/Login';
+import PrivateRoute from './component/private-route/PrivateRoute';
 const test: any = {
   post: {
     loading: true,
@@ -60,7 +62,8 @@ class App extends Component<any, any> {
               <Route path="/about" exact component={About} />
               <Route path="/post/:id?" exact component={PostDetail} />
               <Route path="/addpost" exact component={AddPost} />
-              <Route path="/listpost" exact component={ListPost} />
+              <PrivateRoute path="/listpost" component={ListPost} />
+              <Route path="/login" exact component={Login} />
             </div>
             <Footer />
           </div>

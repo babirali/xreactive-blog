@@ -24,10 +24,10 @@ class NavBar extends Component<any, any> {
                                     <Link className="nav-link" to="/">Home</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/about">Angular</Link>
+                                    <Link className="nav-link" to="/listpost">Angular</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/post/2">Post Detail</Link>
+                                    <Link className="nav-link" to="/login">Post Detail</Link>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">Contact</a>
