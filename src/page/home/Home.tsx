@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 const axios = require('axios');
 import './Home.css'
 import { Link } from 'react-router-dom';
+import { spinnerService } from '../../service/spinner';
 
 class Home extends Component<any, any> {
   constructor(props: any) {
@@ -15,8 +16,9 @@ class Home extends Component<any, any> {
     }
   }
   componentWillMount() {
+    spinnerService.showLoading(true);
     axios.get(process.env.REACT_APP_API_ENDPOINT + 'posts').then((response: any) => {
-      // console.log(response);
+      spinnerService.showLoading(false);
       this.setState({ post: response.data });
     }).catch((error: any) => {
       console.log(error);

@@ -20,6 +20,10 @@ import ListPost from './page-admin/list-post/ListPost';
 import { spinnerService } from './service/spinner';
 import Login from './page/login/Login';
 import PrivateRoute from './component/private-route/PrivateRoute';
+import { authService } from './service/auth';
+import NavSidebar from './component/nav-sidebar/NavSideBar';
+import Tags from './page-admin/tags/Tags';
+import Category from './page-admin/category/Category';
 const test: any = {
   post: {
     loading: true,
@@ -40,6 +44,7 @@ class App extends Component<any, any> {
     this.state = {
       loading: false
     }
+    authService.checkAuth();
   }
   componentDidMount() {
     spinnerService.getMessage().subscribe(value => {
@@ -56,15 +61,29 @@ class App extends Component<any, any> {
                 <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
               </div>
               : ''}
-            <NavBar />
-            <div className="container" style={{ paddingBottom: '30px' }}>
-              <Route path="/" exact component={Home} />
-              <Route path="/about" exact component={About} />
-              <Route path="/post/:id?" exact component={PostDetail} />
-              <Route path="/addpost" exact component={AddPost} />
-              <PrivateRoute path="/listpost" component={ListPost} />
-              <Route path="/login" exact component={Login} />
-            </div>
+            {authService.isAuthenticated ?
+              <div>
+                <div className="sidenav">
+                  <NavSidebar />
+                </div>
+                <div className="main">
+                  <PrivateRoute path="/listpost" component={ListPost} />
+                  <PrivateRoute path="/addpost" exact component={AddPost} />
+                  <PrivateRoute path="/tags" component={Tags} />
+                  <PrivateRoute path="/category" exact component={Category} />
+                </div>
+              </div>
+              :
+              <div>
+                <NavBar />
+                <div className="container" style={{ paddingBottom: '30px' }}>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/about" exact component={About} />
+                  <Route path="/post/:id?" exact component={PostDetail} />
+                  <Route path="/login" exact component={Login} />
+                </div>
+              </div>
+            }
             <Footer />
           </div>
         </Router>

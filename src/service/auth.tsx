@@ -5,27 +5,20 @@ import { spinnerService } from './spinner';
 import { Redirect } from 'react-router';
 const axios = require('axios');
 
-const isloggedin = new Subject<boolean>();
+// const isloggedin = new Subject<boolean>();
 // const isloggedin = false;
 
 export const authService = {
     isAuthenticated : false,
-    login: (user: any) => {
+    login: (user: any, props: any) => {
         let userData = {
             user: user
         }
         axios.post(process.env.REACT_APP_API_ENDPOINT + 'users/login', userData).then((response: any) => {
             localStorage.setItem('token', response.data.user.token);
-            isloggedin.next(true)
-            // isloggedin = true;
             authService.isAuthenticated = true;
             spinnerService.showLoading(false);
-            console.log('test');
-            // <Redirect
-            //     to={{
-            //         pathname: '/listpost'
-            //     }}
-            // />
+            props.history.push('/listpost');
         }).catch((error: any) => {
             toast.error('Error')
             spinnerService.showLoading(false);
@@ -34,7 +27,15 @@ export const authService = {
     },
     logout: () => {
         localStorage.removeItem('token');
-        isloggedin.next(false);
+        authService.isAuthenticated = false;
     },
-    getLoggedUser: () => isloggedin.asObservable()
+    // getLoggedUser: () => isloggedin.asObservable(),
+    checkAuth: () => {
+        var token = localStorage.getItem('token');
+        if (token != null) {
+            authService.isAuthenticated = true;
+        } else {
+            authService.isAuthenticated = false;
+        }
+    }
 };

@@ -4,6 +4,7 @@ import './PostDetail.css'
 import PostComment from '../../component/post-comment/PostComment';
 import ListComment from '../../component/list-comment/ListComment';
 import { throws } from 'assert';
+import { spinnerService } from '../../service/spinner';
 const axios = require('axios');
 class PostDetail extends Component<any, any> {
   constructor(props: any) {
@@ -13,7 +14,9 @@ class PostDetail extends Component<any, any> {
     }
   }
   componentWillMount() {
+    spinnerService.showLoading(true);
     axios.get(process.env.REACT_APP_API_ENDPOINT + 'posts/get/' + this.props.match.params.id).then((response: any) => {
+      spinnerService.showLoading(false);
       this.setState({ post: response.data });
     }).catch((error: any) => {
       console.log(error);

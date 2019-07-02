@@ -12,8 +12,8 @@ class Login extends Component<any, any> {
         this.state = {};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        if (authService.isAuthenticated) {
-            <Redirect to={'listpost'} />
+        if (authService.isAuthenticated == true) {
+            this.props.history.push('/');
         }
     }
 
@@ -23,7 +23,7 @@ class Login extends Component<any, any> {
     handleSubmit(event: any) {
         event.preventDefault();
         spinnerService.showLoading(true);
-        authService.login(this.state);
+        authService.login(this.state,this.props);
     }
 
     render() {
