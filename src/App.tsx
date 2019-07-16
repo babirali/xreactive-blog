@@ -27,6 +27,9 @@ import { authService } from "./service/auth";
 import NavSidebar from "./component/nav-sidebar/NavSideBar";
 import Tags from "./page-admin/tags/Tags";
 import Category from "./page-admin/category/Category";
+import { Observable } from "rxjs/internal/Observable";
+import AxiosSubscriber from "./service/axios-subscriber";
+import { fromEvent, interval } from "rxjs";
 const test: any = {
   post: {
     loading: true,
@@ -38,28 +41,70 @@ const test: any = {
     ],
   },
 };
+import { switchMap, map } from 'rxjs/operators';
+interface MyProps { }
+
+interface MyState {
+  hero: string;
+  whatIs: string;
+  aboutOne: string;
+  aboutTwo: string;
+  testimonial: string;
+  footer: string;
+}
+
 // initialize store
 const store = createStore(reducer, test);
 
 class App extends Component<any, any> {
-  // @ts-ignore
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       loading: false,
     };
     authService.checkAuth();
+
   }
   componentDidMount() {
     spinnerService.getMessage().subscribe((value) => {
       this.setState({ loading: value });
     });
+    let observable$ = new Observable((observer) => {
+      return new AxiosSubscriber(observer);
+    });
+    // let subscription = observable$.subscribe(console.log);
+    // setTimeout(() => {
+    //   subscription.unsubscribe();
+    // });
+    // @ts-ignore
+    // const source1 = fromEvent(document.getElementById('typeahead-input'), 'input');
+    // const exmple1 = source1.pipe(map(() => observable$));
+    // const subscribe1 = exmple1.subscribe(console.log);
+    // @ts-ignore
+    // fromEvent(document.getElementById('typeahead-input'), 'input')
+    //   .pipe(
+    //     switchMap(() => observable$)
+    //   )
+    //   .subscribe(console.log);
+    fromEvent(document, 'click')
+      .pipe(
+        // restart counter on every click
+        switchMap(() => interval(1000))
+      )
+      .subscribe(console.log);
+    //create observable that emits click events
+    // const source = fromEvent(document, 'click');
+    // //map to string with given event timestamp
+    // const example = source.pipe(switchMap((event: any) => `Event time: ${event.timeStamp}`));
+    // //output (example): 'Event time: 7276.390000000001'
+    // const subscribe = example.subscribe(val => console.log(val));
   }
   render() {
     return (
       <Provider store={store}>
         <Router >
           <div>
+            <input id="typeahead-input" type="text" />
             {this.state.loading ?
               <div className="loading-overlay-show">
                 <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>

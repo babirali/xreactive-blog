@@ -9,6 +9,7 @@ import axios from "axios";
 class PostDetail extends Component<any, any> {
   constructor(props: any) {
     super(props);
+    console.log(this.props)
     this.state = {
       post: {},
     };

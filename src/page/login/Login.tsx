@@ -9,6 +9,7 @@ import axios from "axios";
 class Login extends Component<any, any> {
     constructor(props: any) {
         super(props);
+        console.log(this.props);
         this.state = {};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
