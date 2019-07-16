@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
-import SideBar from '../../component/side-bar/SideBar';
-import './PostDetail.css'
-import PostComment from '../../component/post-comment/PostComment';
-import ListComment from '../../component/list-comment/ListComment';
-import { throws } from 'assert';
-import { spinnerService } from '../../service/spinner';
-const axios = require('axios');
+import React, { Component } from "react";
+import SideBar from "../../component/side-bar/SideBar";
+import "./PostDetail.css";
+import PostComment from "../../component/post-comment/PostComment";
+import ListComment from "../../component/list-comment/ListComment";
+import { throws } from "assert";
+import { spinnerService } from "../../service/spinner";
+import axios from "axios";
 class PostDetail extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      post: {}
-    }
+      post: {},
+    };
   }
   componentWillMount() {
     spinnerService.showLoading(true);
-    axios.get(process.env.REACT_APP_API_ENDPOINT + 'posts/get/' + this.props.match.params.id).then((response: any) => {
+    axios.get(process.env.REACT_APP_API_ENDPOINT + "posts/get/" + this.props.match.params.id).then((response: any) => {
       spinnerService.showLoading(false);
       this.setState({ post: response.data });
     }).catch((error: any) => {
-      console.log(error);
+      // console.log(error);
     });
   }
   render() {

@@ -1,27 +1,26 @@
-import React, { Component } from 'react';
-import SideBar from '../../component/side-bar/SideBar';
-import Post from '../../component/post/Post';
-import Pagination from '../../component/pagination/Pagination';
-import { connect } from 'react-redux';
-const axios = require('axios');
-import './Home.css'
-import { Link } from 'react-router-dom';
-import { spinnerService } from '../../service/spinner';
+import React, { Component } from "react";
+import SideBar from "../../component/side-bar/SideBar";
+import Post from "../../component/post/Post";
+import Pagination from "../../component/pagination/Pagination";
+import { connect } from "react-redux";
+import axios from "axios";
+import "./Home.css";
+import { spinnerService } from "../../service/spinner";
 
 class Home extends Component<any, any> {
   constructor(props: any) {
-    super(props)
+    super(props);
     this.state = {
-      post: []
-    }
+      post: [],
+    };
   }
   componentWillMount() {
     spinnerService.showLoading(true);
-    axios.get(process.env.REACT_APP_API_ENDPOINT + 'posts').then((response: any) => {
+    axios.get(process.env.REACT_APP_API_ENDPOINT + "posts").then((response: any) => {
       spinnerService.showLoading(false);
       this.setState({ post: response.data });
     }).catch((error: any) => {
-      console.log(error);
+      // console.log(error);
     });
   }
   render() {
@@ -38,8 +37,9 @@ class Home extends Component<any, any> {
             {/* <h1 className="my-4">Page Heading
                 <small>Secondary Text</small>
           </h1> */}
-            {this.state.post.map((post: any, index: number) =>
-              <Post post={post} key={index} />
+            {this.state.post.map((post: any, index: number) => {
+              return <Post post={post} key={index} />;
+            }
             )}
             <Pagination />
           </div>

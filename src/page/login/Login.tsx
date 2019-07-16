@@ -4,7 +4,7 @@ import { spinnerService } from "../../service/spinner";
 import { toast } from "react-toastify";
 import { authService } from "../../service/auth";
 import { Redirect } from "react-router";
-const axios = require('axios');
+import axios from "axios";
 
 class Login extends Component<any, any> {
     constructor(props: any) {
@@ -12,18 +12,18 @@ class Login extends Component<any, any> {
         this.state = {};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        if (authService.isAuthenticated == true) {
-            this.props.history.push('/');
+        if (authService.isAuthenticated === true) {
+            this.props.history.push("/");
         }
     }
 
     handleChange(event: any) {
-        this.setState({ [event.target.name]: event.target.value })
+        this.setState({ [event.target.name]: event.target.value });
     }
     handleSubmit(event: any) {
         event.preventDefault();
         spinnerService.showLoading(true);
-        authService.login(this.state,this.props);
+        authService.login(this.state, this.props);
     }
 
     render() {
@@ -44,4 +44,4 @@ class Login extends Component<any, any> {
         );
     }
 }
-export default Login; 
+export default Login;

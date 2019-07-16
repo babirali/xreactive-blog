@@ -21,6 +21,7 @@
     "alwaysStrict": false,
     "strictFunctionTypes": false,
     "strictPropertyInitialization": false,
+    "noImplicitAny": false
   },
   "include": [
     "src"

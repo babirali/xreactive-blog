@@ -7,13 +7,14 @@
     "@types/node": "^10.12.18",
     "@types/typescript": "^2.0.0",
     "nodemon": "^1.19.0",
-    "tslint": "^5.12.0",
-    "typescript": "^3.2.2"
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^12.2.0",
     "@opuscapita/react-filemanager": "^1.1.0-beta.6",
     "@opuscapita/react-filemanager-connector-node-v1": "^1.1.0-beta.6",
+    "@types/axios-cancel": "^0.2.0",
     "@types/jest": "23.3.12",
     "@types/jquery": "^3.3.29",
     "@types/react": "16.7.18",
@@ -23,6 +24,7 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/react-table": "^6.8.1",
     "axios": "^0.18.0",
+    "axios-cancel": "^0.2.2",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.2.1",
     "ckeditor4-react": "^0.1.0",
@@ -50,14 +52,16 @@
     "react-table": "^6.10.0",
     "react-toastify": "^5.3.1",
     "redux": "^4.0.1",
-    "rxjs": "^6.5.2"
+    "rxjs": "^6.5.2",
+    "ts-loader": "^6.0.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3023 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "nodemon server/index.js"
+    "server": "nodemon server/index.js",
+    "tslint":"tslint -c tslint.json 'src/**/*.tsx'"
   },
   "eslintConfig": {
     "extends": "react-app"

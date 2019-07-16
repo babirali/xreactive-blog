@@ -1,44 +1,45 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-const CKEditor = require('ckeditor4-react');
-const axios = require('axios');
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './AddPost.css'
-import { spinnerService } from '../../service/spinner';
-import { Observable, Subject } from 'rxjs';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+const CKEditor = require("ckeditor4-react");
+// import CKEditor from "ckeditor4-react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./AddPost.css";
+import { spinnerService } from "../../service/spinner";
+import { Observable, Subject } from "rxjs";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 class AddPost extends Component<any, any> {
     constructor(props: any) {
-        super(props)
-        this.state = {}
+        super(props);
+        this.state = {};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event: any) {
-        this.setState({ [event.target.name]: event.target.value })
+        this.setState({ [event.target.name]: event.target.value });
     }
 
     handleSubmit(event: any) {
         spinnerService.showLoading(true);
         event.preventDefault();
-        axios.post(process.env.REACT_APP_API_ENDPOINT + 'posts/save', this.state).then((response: any) => {
-            toast.success('Saved Successfully ')
+        axios.post(process.env.REACT_APP_API_ENDPOINT + "posts/save", this.state).then((response: any) => {
+            toast.success("Saved Successfully");
             spinnerService.showLoading(false);
         }).catch((error: any) => {
-            toast.error('Error')
-            console.log(error);
+            toast.error("Error");
+            // console.log(error);
         });
     }
     notify = () => {
         this.setState({ loading: true });
-    };
+    }
     handleDate = (date: any) => {
         this.setState({
-            date: date
+            date,
         });
     }
 
@@ -79,7 +80,8 @@ class AddPost extends Component<any, any> {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="tags">Tags</label>
-                                <input type="text" className="form-control" name="tags" value={this.state.tags} onChange={this.handleChange} id="tags" placeholder="Tags" />
+                                <input type="text" className="form-control"
+                                    name="tags" value={this.state.tags} onChange={this.handleChange} id="tags" placeholder="Tags" />
                             </div>
                         </div>
                         <div className="col-md-12">
@@ -88,8 +90,8 @@ class AddPost extends Component<any, any> {
                                 data={this.state.content}
                                 onChange={(evt: any) => this.setState({ content: evt.editor.getData() })}
                                 config={{
-                                    filebrowserBrowseUrl: process.env.REACT_APP_API_ENDPOINT + 'posts/browse',
-                                    filebrowserUploadUrl: process.env.REACT_APP_API_ENDPOINT + 'posts/upload1',
+                                    filebrowserBrowseUrl: process.env.REACT_APP_API_ENDPOINT + "posts/browse",
+                                    filebrowserUploadUrl: process.env.REACT_APP_API_ENDPOINT + "posts/upload1",
                                 }}
                             />
                             <div className="pull-right pt-3">

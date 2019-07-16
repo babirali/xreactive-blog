@@ -4,7 +4,7 @@ import { authService } from "../../service/auth";
 
 class NavSidebar extends Component {
     constructor(props: any) {
-        super(props)
+        super(props);
     }
     render() {
         return (
@@ -15,7 +15,7 @@ class NavSidebar extends Component {
                 <Link className="nav-link" to="/tags">Tags</Link>
                 <a className="nav-link" href="" onClick={() => authService.logout()}>Log Out</a>
             </div>
-        )
+        );
     }
 }
 export default NavSidebar;
