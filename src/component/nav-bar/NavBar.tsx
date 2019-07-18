@@ -21,6 +21,9 @@ class NavBar extends Component<any, any> {
                                 <li className="nav-item active">
                                     <Link className="nav-link" to="/">Home</Link>
                                 </li>
+                                <li className="nav-item active">
+                                    <Link className="nav-link" to="/login">Home</Link>
+                                </li>
                             </ul>
                             <div className="social-part ml-auto">
                                 <i className="fa fa-facebook" aria-hidden="true"></i>

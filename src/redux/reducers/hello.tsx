@@ -9,7 +9,7 @@ const initialState = {
 };
 export default (state = initialState, action: any) => {
     switch (action.type) {
-        case "test":
+        case "hello":
             return state;
         default:
             return state;

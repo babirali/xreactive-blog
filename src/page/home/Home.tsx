@@ -20,6 +20,7 @@ class Home extends Component<any, any> {
       spinnerService.showLoading(false);
       this.setState({ post: response.data });
     }).catch((error: any) => {
+      spinnerService.showLoading(false);
       // console.log(error);
     });
   }

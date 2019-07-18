@@ -2,20 +2,48 @@
   "name": "nec-test",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "webpack-dev-server --mode development --open --hot",
+    "build": "webpack --mode production",
+    "test": "jest",
+    "eject": "react-scripts eject",
+    "server": "nodemon server/index.js",
+    "tslint": "tslint -c tslint.json 'src/**/*.tsx'",
+    "prettier": "prettier --check 'src/**/*.tsx'"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./src/setupTests.ts"
+  },
   "devDependencies": {
     "@types/express": "^4.16.0",
+    "@types/jest": "^23.3.12",
     "@types/node": "^10.12.18",
     "@types/typescript": "^2.0.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.0.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.8.0",
     "nodemon": "^1.19.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "prettier": "1.18.2",
+    "react-test-renderer": "^16.8.6",
+    "ts-jest": "^24.0.2",
     "tslint": "^5.18.0",
-    "typescript": "^3.5.3"
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.5.3",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^12.2.0",
     "@opuscapita/react-filemanager": "^1.1.0-beta.6",
     "@opuscapita/react-filemanager-connector-node-v1": "^1.1.0-beta.6",
     "@types/axios-cancel": "^0.2.0",
-    "@types/jest": "23.3.12",
+    "@types/enzyme": "^3.10.3",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/jquery": "^3.3.29",
     "@types/react": "16.7.18",
     "@types/react-datepicker": "^2.3.0",
@@ -23,6 +51,7 @@
     "@types/react-redux": "^7.0.1",
     "@types/react-router-dom": "^4.3.1",
     "@types/react-table": "^6.8.1",
+    "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.18.0",
     "axios-cancel": "^0.2.2",
     "body-parser": "^1.18.3",
@@ -34,6 +63,7 @@
     "express-jwt": "^5.3.1",
     "express-session": "^1.16.1",
     "font-awesome": "^4.7.0",
+    "font-awesome-webpack": "0.0.5-beta.2",
     "jquery": "^3.3.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.1.13",
@@ -54,14 +84,6 @@
     "redux": "^4.0.1",
     "rxjs": "^6.5.2",
     "ts-loader": "^6.0.4"
-  },
-  "scripts": {
-    "start": "set PORT=3023 && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server": "nodemon server/index.js",
-    "tslint":"tslint -c tslint.json 'src/**/*.tsx'"
   },
   "eslintConfig": {
     "extends": "react-app"

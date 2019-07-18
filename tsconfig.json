@@ -1,33 +1,33 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "es6",
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "es2015",
+      "es2017",
+      "dom"
     ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
+    "removeComments": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "jsx": "preserve",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "alwaysStrict": false,
-    "strictFunctionTypes": false,
-    "strictPropertyInitialization": false,
-    "noImplicitAny": false
+    "jsx": "react",
+    "allowJs": true,
+    "baseUrl": "./",
+    "skipLibCheck": true,
+    "paths": {
+      "components/*": [
+        "src/components/*"
+      ],
+    },
+    "esModuleInterop": true,
+    // "types": [ "react", "react-dom", "react-router-dom"],
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "src/server",
-    "src/assets/**/*"
-  ]
+  // "inc, "setupTests.js"lude": [
+  //   "src"
+  // ],
+  // "exclude": [
+  //   "src/server",
+  //   "src/assets/**/*"
+  // ]
 }

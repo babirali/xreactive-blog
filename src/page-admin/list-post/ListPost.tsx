@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import SideBar from "../../component/side-bar/SideBar";
-import Post from "../../component/post/Post";
-import Pagination from "../../component/pagination/Pagination";
 import { connect } from "react-redux";
 import axios from "axios";
 import "./ListPost.css";
@@ -12,8 +9,6 @@ import { Link } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { spinnerService } from "../../service/spinner";
-import { EOVERFLOW } from "constants";
-import { error } from "util";
 class ListPost extends Component<any, any> {
     constructor(props: any) {
         super(props);
