@@ -1,0 +1,22 @@
+
+net start MongoDB
+
+docker build -t babirali/node-web-app .
+docker run -p 49160:8081 -d babirali/node-web-app
+
+
+docker-compose up -d --build 
+docker-compose down --rmi local
+
+docker tag imageid username/reposiroty:tag
+docker push tagName
+
+az container show --resource-group xreactive --name testing-container-instance (get container informaion)
+az container logs --resource-group myResourceGroup --name mycontainer (get logs of container)
+az container attach --resource-group myResourceGroup --name mycontainer (attach output steam)
+az container delete --resource-group myResourceGroup --name mycontainer (delete container)
+az container list --resource-group myResourceGroup --output table (list container)
+az group delete --name myResourceGroup (delete resource group)
+
+https://docs.microsoft.com/en-us/azure/container-instances/container-instances-quickstart-portal 
+
