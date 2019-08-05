@@ -26,10 +26,10 @@ class ListPost extends Component<any, any> {
                 {
                     label: "Yes",
                     onClick: () => {
-                        axios.get(process.env.REACT_APP_API_ENDPOINT + "posts/delete/" + id).then((response: any) => {
+                        axios.get(process.env.API_ENDPOINT + "api/posts/delete/" + id).then((response: any) => {
                             spinnerService.showLoading(true);
                             toast.success("Deleted Successfully");
-                            axios.get(process.env.REACT_APP_API_ENDPOINT + "posts")
+                            axios.get(process.env.API_ENDPOINT + "api/api/posts")
                                 .then((res: any) => {
                                     this.setState({
                                         post: res.data,
@@ -87,7 +87,7 @@ class ListPost extends Component<any, any> {
                         }}
                         onFetchData={(state, instance) => {
                             spinnerService.showLoading(true);
-                            axios.get(process.env.REACT_APP_API_ENDPOINT + "posts")
+                            axios.get(process.env.API_ENDPOINT + "api/posts")
                                 .then((res: any) => {
                                     this.setState({
                                         post: res.data,

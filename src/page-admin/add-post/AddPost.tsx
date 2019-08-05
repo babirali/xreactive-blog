@@ -26,7 +26,7 @@ class AddPost extends Component<any, any> {
     handleSubmit(event: any) {
         spinnerService.showLoading(true);
         event.preventDefault();
-        axios.post(process.env.REACT_APP_API_ENDPOINT + "posts/save", this.state).then((response: any) => {
+        axios.post(process.env.API_ENDPOINT + "api/posts/save", this.state).then((response: any) => {
             toast.success("Saved Successfully");
             spinnerService.showLoading(false);
         }).catch((error: any) => {
@@ -90,8 +90,8 @@ class AddPost extends Component<any, any> {
                                 data={this.state.content}
                                 onChange={(evt: any) => this.setState({ content: evt.editor.getData() })}
                                 config={{
-                                    filebrowserBrowseUrl: process.env.REACT_APP_API_ENDPOINT + "posts/browse",
-                                    filebrowserUploadUrl: process.env.REACT_APP_API_ENDPOINT + "posts/upload1",
+                                    filebrowserBrowseUrl: process.env.API_ENDPOINT + "api/posts/browse",
+                                    filebrowserUploadUrl: process.env.API_ENDPOINT + "api/posts/upload1",
                                 }}
                             />
                             <div className="pull-right pt-3">

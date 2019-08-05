@@ -15,7 +15,7 @@ class PostDetail extends Component<any, any> {
   }
   componentWillMount() {
     spinnerService.showLoading(true);
-    axios.get(process.env.REACT_APP_API_ENDPOINT + "posts/get/" + this.props.match.params.id).then((response: any) => {
+    axios.get(process.env.API_ENDPOINT + "api/posts/get/" + this.props.match.params.id).then((response: any) => {
       spinnerService.showLoading(false);
       this.setState({ post: response.data });
     }).catch((error: any) => {

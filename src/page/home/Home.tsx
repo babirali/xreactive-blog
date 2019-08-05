@@ -16,7 +16,7 @@ class Home extends Component<any, any> {
   }
   componentWillMount() {
     spinnerService.showLoading(true);
-    axios.get(process.env.REACT_APP_API_ENDPOINT + "posts").then((response: any) => {
+    axios.get(process.env.API_ENDPOINT + "api/posts").then((response: any) => {
       spinnerService.showLoading(false);
       this.setState({ post: response.data });
     }).catch((error: any) => {

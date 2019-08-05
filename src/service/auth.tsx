@@ -22,7 +22,7 @@ export const authService = {
         const userData = {
             user,
         };
-        axios.post(process.env.REACT_APP_API_ENDPOINT + "users/login", userData).then((response: any) => {
+        axios.post(process.env.API_ENDPOINT + "api/users/login", userData).then((response: any) => {
             localStorage.setItem("token", response.data.user.token);
             authService.isAuthenticated = true;
             spinnerService.showLoading(false);

@@ -4,9 +4,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-var REACT_APP_API_ENDPOINT = {
+var API_ENDPOINT = {
     production: "",
-    development: "http://localhost:3022/api/",
+    development: "http://localhost:3022/",
 }
 
 var environment = process.env.NODE_ENV == 'production' ? 'production' : 'development';
@@ -48,7 +48,7 @@ module.exports = {
             template: './src/index.html'
         }),
         new webpack.EnvironmentPlugin({
-            REACT_APP_API_ENDPOINT: REACT_APP_API_ENDPOINT[environment],
+            API_ENDPOINT: API_ENDPOINT[environment],
             //NODE_ENV: API_URL[environment], // use 'development' unless process.env.NODE_ENV is defined
             DEBUG: false
         }),
