@@ -55,30 +55,12 @@ class App extends Component<any, any> {
     spinnerService.getMessage().subscribe((value) => {
       this.setState({ loading: value });
     });
-    const observable$ = new Observable((observer) => {
-      return new AxiosSubscriber(observer);
-    });
-    // @ts-ignore
-    // fromEvent(document.getElementById('typeahead-input'), 'input')
-    //   .pipe(
-    //     switchMap(() => observable$)
-    //   )
-    //   .subscribe(console.log);
-    // fromEvent(document, "click")
-    //   .pipe(
-    //     // restart counter on every click
-    //     switchMap(
-    //       () => observable$
-    //     )
-    //   )
-    //   .subscribe(console.log);
   }
   render() {
     return (
       <Provider store={store}>
         <BrowserRouter>
           <div>
-            {/* <input id="typeahead-input" type="text" /> */}
             {this.state.loading ?
               <div className="loading-overlay-show">
                 <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
