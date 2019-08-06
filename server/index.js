@@ -8,7 +8,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 
 //Configure Mongoose
-mongoose.connect('mongodb://localhost/xreactive', {useNewUrlParser: true});
+mongoose.connect('mongodb://10.0.75.1/xreactive', {useNewUrlParser: true});
 mongoose.set('debug', true);
 
 // const initDb = require("./db").initDb;

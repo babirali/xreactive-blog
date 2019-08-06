@@ -9,9 +9,9 @@ class Post extends Component<any, any> {
                 <div className="card-header border-0 padding-0">
                     <img src={this.props.post.img} alt="" />
                 </div>
-                <div className="card-block p-4">
-                    <h4 className="card-title pb-2" id="test">{this.props.post.heading}</h4>
-                    <p className="card-text" dangerouslySetInnerHTML={{ __html: this.props.post.content }}>{}</p>
+                <div className="card-block p-2">
+                    <h3 className="card-title pb-2" id="test" style={{lineHeight:1.2}}>{this.props.post.heading}</h3>
+                    <p className="card-text" dangerouslySetInnerHTML={{ __html: this.props.post.content.substring(3, 99) }} />
                     <Link className="link small" to={"/post/" + this.props.post._id}>
                         Read More <span className="pl-1">⟶</span>
                     </Link>

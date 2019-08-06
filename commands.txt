@@ -20,5 +20,13 @@ az group delete --name myResourceGroup (delete resource group)
 
 https://docs.microsoft.com/en-us/cli/azure/cosmosdb?view=azure-cli-latest (azure cli)
 
-az container create --resource-group xreactive --name test-b --image babirali/web-test --ports 8081 --dns-name-label test-bb --cpu 1 --memory 1 --os-type Linux 
+
+cls
+cd C:\docker-temp
+docker build -t babirali/web-test:1.0.0 .
+docker push babirali/web-test
+echo 'delete container'
+az container delete -g xreactive -n test-b -y
+echo 'updating container'
+az container create -g xreactive -n test-b --image babirali/web-test:1.0.0 --ports 80 --dns-name-label test-bb --cpu 1 --memory 1 --os-type Linux 
 
