@@ -8,7 +8,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 
 //Configure Mongoose
-mongoose.connect('mongodb://10.0.75.1/xreactive', {useNewUrlParser: true});
+mongoose.connect('mongodb://xreactive-mongodb:uTEXzzvZ8qCATRALDJGpP8HqklCHtqXxAc7DQUOzb88WT6vQNVLb7KMNcSrfsLjc98xF55oOp890cusk4WWTlg==@xreactive-mongodb.documents.azure.com:10255/xreactive?ssl=true&replicaSet=globaldb', {useNewUrlParser: true});
 mongoose.set('debug', true);
 
 // const initDb = require("./db").initDb;
@@ -22,7 +22,7 @@ const app = express();
 app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, '../build'))); // Point static path to dist
+app.use(express.static(path.join(__dirname, './build'))); // Point static path to dist
 app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
 // Set our api routes
