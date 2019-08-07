@@ -23,7 +23,7 @@ module.exports = {
         extensions: ['.ts', '.tsx', '.js']
     },
     output: {
-        path: path.join(__dirname, '/dist'),
+        path: path.join(__dirname, '/server/build'),
         chunkFilename: '[name].[chunkhash].js',
         filename: 'bundle.min.js'
     },

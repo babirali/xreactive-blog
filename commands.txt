@@ -3,7 +3,7 @@ net start MongoDB
 
 docker build -t babirali/node-web-app .
 docker run -p 49160:8081 -d babirali/node-web-app
-
+docker run -it babirali/xreactive sh
 
 docker-compose up -d --build 
 docker-compose down --rmi local
@@ -29,4 +29,10 @@ echo 'delete container'
 az container delete -g xreactive -n test-b -y
 echo 'updating container'
 az container create -g xreactive -n test-b --image babirali/web-test:1.0.0 --ports 80 --dns-name-label test-bb --cpu 1 --memory 1 --os-type Linux 
+
+mongodump --out ./data --host 10.0.75.1 --port 27017 --db xreactive
+
+mongodump --host xreactive-mongodb.documents.azure.com --port 10255 --username xreactive-mongodb --password uTEXzzvZ8qCATRALDJGpP8HqklCHtqXxAc7DQUOzb88WT6vQNVLb7KMNcSrfsLjc98xF55oOp890cusk4WWTlg== --out ./azure
+
+docker run -e ME_CONFIG_MONGODB_SERVER=10.0.75.1 -p 8081:8081 mongo-express
 
