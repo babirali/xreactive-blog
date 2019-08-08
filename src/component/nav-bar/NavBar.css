@@ -2,7 +2,33 @@
     background-color: #fff!important;
 } */
 
-
 .social-part .fa {
     padding-right: 20px;
 }
+
+.link-hover:hover {
+    background: rgba(53, 189, 178, 0.5);
+    border-radius: 2px;
+    color: white;
+}
+
+.link-hover {
+    color: black;
+    font-size: 18px;
+}
+
+.link-active {
+    color: white;
+    background: #35bdb2;
+    border-radius: 2px;
+    color: white;
+}
+.nav-link {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 1.5rem !important;
+    padding-left: 1.5rem !important;
+}
+/* .navbar-toggler {
+    background-color: #35bdb2 !important;
+} */

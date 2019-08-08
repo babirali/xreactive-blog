@@ -24,22 +24,19 @@ class PostDetail extends Component<any, any> {
   }
   render() {
     return (
-      <div className="row">
-        <div className="col-lg-8">
-          <h1 className="mt-4">{this.state.post.heading}</h1>
-          <b>Posted on {this.state.post.date} 3 min read</b>
-          <hr />
-          <p className="lead">
-            by <a href="#"> {this.state.post.postBy}</a>
-          </p>
-          <hr />
-          <img className="img-fluid rounded" src={this.state.post.mainImg} alt="" />
-          <div dangerouslySetInnerHTML={{ __html: this.state.post.content }}></div>
-          <script src="https://gist.github.com/babirali/0327b7988eab28c22cdaae51f6932efd.js"></script>
-          {/* <PostComment />
+      <div className="">
+        <h1 className="mt-4">{this.state.post.heading}</h1>
+        <b>Posted on {this.state.post.date} 3 min read</b>
+        <hr />
+        <p className="lead">
+          by <a href="#"> {this.state.post.postBy}</a>
+        </p>
+        <hr />
+        <img className="img-fluid rounded" src={this.state.post.mainImg} alt="" />
+        <div dangerouslySetInnerHTML={{ __html: this.state.post.content }}></div>
+        <script src="https://gist.github.com/babirali/0327b7988eab28c22cdaae51f6932efd.js"></script>
+        {/* <PostComment />
               <ListComment /> */}
-        </div>
-        <SideBar />
       </div>
     );
   }

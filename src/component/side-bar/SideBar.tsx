@@ -4,7 +4,7 @@ import "./SideBar.css";
 class SideBar extends Component<any, any> {
     render() {
         return (
-            <div className="col-md-4 pr-0">
+            <div className="col-md-3 pr-0">
                 <div className="card mb-4 border-0">
                     <h5 className="card-header border-0 text-uppercase text-dark">Search</h5>
                     <div className="card-body">
@@ -49,14 +49,6 @@ class SideBar extends Component<any, any> {
                         </div>
                     </div>
                 </div>
-                <div className="card my-4 border-0">
-                    <h5 className="card-header text-uppercase border-0 text-dark">Side Widget</h5>
-                    <div className="card-body">
-                        You can put anything you want inside of these side widgets.
-                        They are easy to use, and feature the new Bootstrap 4 card containers!
-                    </div>
-                </div>
-
             </div>
         );
     }

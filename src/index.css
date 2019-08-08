@@ -10,3 +10,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+.btn-primary {
+  color: #fff !important;
+  background-color: #35bdb2 !important;
+  border-color: #35bdb2 !important;
+}

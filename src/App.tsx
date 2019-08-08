@@ -39,6 +39,7 @@ const test: any = {
   },
 };
 import { switchMap, map } from "rxjs/operators";
+import SideBar from "./component/side-bar/SideBar";
 
 // initialize store
 const store = createStore(reducer, test);
@@ -66,31 +67,34 @@ class App extends Component<any, any> {
                 <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
               </div>
               : ""}
-            <Switch>
-              {authService.isAuthenticated ?
-                <div>
-                  <div className="sidenav">
-                    <NavSidebar />
-                  </div>
-                  <div className="main">
-                    <PrivateRoute path="/listpost" component={ListPost} />
-                    <PrivateRoute path="/addpost" exact component={AddPost} />
-                    <PrivateRoute path="/tags" component={Tags} />
-                    <PrivateRoute path="/category" exact component={Category} />
+            {authService.isAuthenticated ?
+              <div>
+                <div className="sidenav">
+                  <NavSidebar />
+                </div>
+                <div className="main">
+                  <PrivateRoute path="/listpost" component={ListPost} />
+                  <PrivateRoute path="/addpost" exact component={AddPost} />
+                  <PrivateRoute path="/tags" component={Tags} />
+                  <PrivateRoute path="/category" exact component={Category} />
+                </div>
+              </div>
+              :
+              <div>
+                <NavBar />
+                <div className="container" style={{ paddingBottom: "30px" }}>
+                  <div className="row">
+                    <div className="col-md-9 pl-0">
+                      <Route path="/" exact component={Home} />
+                      <Route path="/about" exact component={About} />
+                      <Route path="/post/:id?" exact component={PostDetail} />
+                      <Route path="/login" exact component={Login} />
+                    </div>
+                    <SideBar />
                   </div>
                 </div>
-                :
-                <div>
-                  <NavBar />
-                  <div className="container" style={{ paddingBottom: "30px" }}>
-                    <Route path="/" exact component={Home} />
-                    <Route path="/about" exact component={About} />
-                    <Route path="/post/:id?" exact component={PostDetail} />
-                    <Route path="/login" exact component={Login} />
-                  </div>
-                </div>
-              }
-            </Switch>
+              </div>
+            }
             <Footer />
           </div>
         </BrowserRouter >

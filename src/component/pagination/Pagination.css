@@ -1,3 +1,30 @@
-margin-24 {
-    margin-top: 24px !important;
+.page-link {
+    background: #fff;
+    color: black;
+}
+
+.page-link-active {
+    background: #35bdb2;
+    color: white;
+}
+
+.page-link-active:hover {
+    background: #35bdb2 !important;
+    color: white !important;
+    cursor: default !important;
+}
+
+.page-link:hover {
+    color: black;
+    background: rgba(53, 189, 178, 0.7);
+}
+
+.page-link-disabled {
+    background: rgba(53, 189, 178, 0.5);
+    cursor: not-allowed !important;
+}
+
+.page-link-disabled:hover {
+    background: rgba(53, 189, 178, 0.5);
+    color: white;
 }
