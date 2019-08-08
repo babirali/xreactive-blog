@@ -8,10 +8,10 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 
 //Configure Mongoose
-mongoose.connect('mongodb://xreactive-mongodb:uTEXzzvZ8qCATRALDJGpP8HqklCHtqXxAc7DQUOzb88WT6vQNVLb7KMNcSrfsLjc98xF55oOp890cusk4WWTlg==@xreactive-mongodb.documents.azure.com:10255/xreactive?ssl=true&replicaSet=globaldb', {useNewUrlParser: true});
+mongoose.connect('mongodb://xreactive-mongodb:uTEXzzvZ8qCATRALDJGpP8HqklCHtqXxAc7DQUOzb88WT6vQNVLb7KMNcSrfsLjc98xF55oOp890cusk4WWTlg%3D%3D@xreactive-mongodb.documents.azure.com:10255/xreactive?ssl=true', {useNewUrlParser: true});
 mongoose.set('debug', true);
 
-// const initDb = require("./db").initDb;
+// const initDb = require("./db").initDb; 
 // const getDb = require("./db").getDb;
 
 // Get our API routes
@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'routes/api/uploads')))
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
     console.log(__dirname);
-    res.sendFile(path.join(__dirname, '../build/index.html'));
+    res.sendFile(path.join(__dirname, './build/index.html'));
 });
 
 const port = process.env.PORT || '3022';

@@ -11,4 +11,6 @@ COPY . .
 
 EXPOSE 3023
 
-CMD [ "node", "server/index.js" ]
+#CMD [ "node", "server/index.js" ]
+
+CMD [ "npm","run", "server" ]

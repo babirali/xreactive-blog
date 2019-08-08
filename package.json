@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --mode production",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --mode development --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --mode production",
     "test": "jest",
     "eject": "react-scripts eject",
-    "server": "nodemon server/index.js",
+    "server:dev": "cross-env PORT=3022 nodemon server/index.js",
+    "server": "cross-env PORT=80 node server/index.js",
     "tslint": "tslint -c tslint.json 'src/**/*.tsx'",
     "prettier": "prettier --check 'src/**/*.tsx'"
   },
@@ -59,6 +60,7 @@
     "ckeditor4-react": "^0.1.0",
     "connect-multiparty": "^2.2.0",
     "cors": "^2.8.5",
+    "cross-env": "^5.2.0",
     "express": "^4.16.4",
     "express-jwt": "^5.3.1",
     "express-session": "^1.16.1",
