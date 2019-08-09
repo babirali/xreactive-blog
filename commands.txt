@@ -39,7 +39,7 @@ docker run -e ME_CONFIG_MONGODB_SERVER=10.0.75.1 -p 8081:8081 mongo-express
 #az container show --resource-group xreactive --name testing-container-instance --output table
 docker build -t babirali/xreactive:1 .
 
-docker push babirali/xreactive:1
+docker push babirali/xreactive
 
-az container create --resource-group xreactive --name xreactive --image babirali/xreactive:1 --ports 80 --dns-name-label xreactive --cpu 1 --memory 1 --os-type Linux 
+az container create --resource-group xreactive --name xreactive --image babirali/xreactive --ports 80 --dns-name-label xreactive --cpu 1 --memory 1 --os-type Linux 
 

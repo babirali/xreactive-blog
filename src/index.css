@@ -16,3 +16,11 @@ code {
   background-color: #35bdb2 !important;
   border-color: #35bdb2 !important;
 }
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem #35bdb240 !important;
+  border-color: #35bdb2 !important;
+}
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.2rem #35bdb240 !important;
+}

@@ -8,7 +8,13 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 
 //Configure Mongoose
-mongoose.connect('mongodb://10.0.75.1/xreactive', {useNewUrlParser: true});
+if (process.env.PORT == 3022) {
+    mongoose.connect('mongodb://10.0.75.1/xreactive', { useNewUrlParser: true });
+} else {
+    mongoose.connect('mongodb://xreactive-mongodb:uTEXzzvZ8qCATRALDJGpP8HqklCHtqXxAc7DQUOzb88WT6vQNVLb7KMNcSrfsLjc98xF55oOp890cusk4WWTlg==@xreactive-mongodb.documents.azure.com:10255/xreactive?ssl=true&replicaSet=globaldb', { useNewUrlParser: true });
+}
+
+
 mongoose.set('debug', true);
 
 // const initDb = require("./db").initDb; 
@@ -47,5 +53,5 @@ app.set('port', port);
 const server = http.createServer(app);
 
 // initDb(function (err) {
-    server.listen(port, () => console.log(`API running on localhost:${port}`));
+server.listen(port, () => console.log(`API running on localhost:${port}`));
 // });

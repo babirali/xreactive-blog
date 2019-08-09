@@ -7,18 +7,18 @@ class SideBar extends Component<any, any> {
             <div className="col-md-3 pr-0">
                 <div className="card mb-4 border-0">
                     <h5 className="card-header border-0 text-uppercase text-dark">Search</h5>
-                    <div className="card-body">
+                    <div className="card-body p-0">
                         <div className="input-group">
-                            <input type="text" className="form-control rounded-0" placeholder="Search for..." />
-                            <span className="input-group-btn">
-                                <button className="btn btn-secondary rounded-0" type="button">Go!</button>
-                            </span>
+                            <input type="text" className="form-control" placeholder="Search Post" />
+                            {/* <span className="input-group-btn">
+                                <button className="btn btn-primary" type="button">Go!</button>
+                            </span> */}
                         </div>
                     </div>
                 </div>
                 <div className="card my-4 border-0">
                     <h5 className="card-header text-uppercase border-0 text-dark">Categories</h5>
-                    <div className="card-body">
+                    <div className="card-body p-0">
                         <div className="row">
                             <div className="col-lg-6">
                                 <ul className="list-unstyled mb-0">
@@ -31,10 +31,6 @@ class SideBar extends Component<any, any> {
                                     <li>
                                         <a href="#">Freebies</a>
                                     </li>
-                                </ul>
-                            </div>
-                            <div className="col-lg-6">
-                                <ul className="list-unstyled mb-0">
                                     <li>
                                         <a href="#">JavaScript</a>
                                     </li>
@@ -46,6 +42,15 @@ class SideBar extends Component<any, any> {
                                     </li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="card mb-4 border-0">
+                    <h5 className="card-header border-0 text-uppercase text-dark">Social</h5>
+                    <div className="card-body p-0">
+                        <div className="social-part ml-auto">
+                            <i className="fa fa-facebook" aria-hidden="true"></i>
+                            <i className="fa fa-twitter" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
