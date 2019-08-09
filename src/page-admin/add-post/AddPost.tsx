@@ -10,15 +10,27 @@ import { spinnerService } from "../../service/spinner";
 import { Observable, Subject } from "rxjs";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { Editor, EditorState, RichUtils } from 'draft-js';
 class AddPost extends Component<any, any> {
+    editor: any;
     constructor(props: any) {
         super(props);
         this.state = {};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            editorState: EditorState.createEmpty()
+        }
+        this.onChange = this.onChange.bind(this);
+        this.setEditor = this.setEditor.bind(this)
     }
-
+    onChange = (editorState) => {
+        console.log(editorState);
+        this.setState({ editorState })
+    };
+    setEditor = (editor) => {
+        this.editor = editor;
+    };
     handleChange(event: any) {
         this.setState({ [event.target.name]: event.target.value });
     }
@@ -85,7 +97,7 @@ class AddPost extends Component<any, any> {
                             </div>
                         </div>
                         <div className="col-md-12">
-                            <CKEditor
+                            {/* <CKEditor
                                 type="classic"
                                 data={this.state.content}
                                 onChange={(evt: any) => this.setState({ content: evt.editor.getData() })}
@@ -93,6 +105,11 @@ class AddPost extends Component<any, any> {
                                     filebrowserBrowseUrl: process.env.API_ENDPOINT + "api/posts/browse",
                                     filebrowserUploadUrl: process.env.API_ENDPOINT + "api/posts/upload1",
                                 }}
+                            /> */}
+                            <Editor
+                                ref={this.setEditor}
+                                editorState={this.state.editorState}
+                                onChange={this.onChange}
                             />
                             <div className="pull-right pt-3">
                                 <button type="submit" className="btn btn-primary mr-2" onClick={this.handleSubmit}>Save</button>

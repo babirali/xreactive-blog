@@ -1,3 +1,7 @@
 .react-datepicker-wrapper {
     display: block !important;
 }
+.DraftEditor-root {
+    border: 1px solid #35bdb2;
+    border-radius: 4px;
+}
