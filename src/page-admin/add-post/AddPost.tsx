@@ -10,7 +10,30 @@ import { spinnerService } from "../../service/spinner";
 import { Observable, Subject } from "rxjs";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Editor, EditorState, RichUtils } from 'draft-js';
+// import { EditorState, RichUtils } from 'draft-js';
+import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
+import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
+import 'draft-js-static-toolbar-plugin/lib/plugin.css';
+
+import {
+    ItalicButton,
+    BoldButton,
+    UnderlineButton,
+    CodeButton,
+    HeadlineOneButton,
+    HeadlineTwoButton,
+    HeadlineThreeButton,
+    UnorderedListButton,
+    OrderedListButton,
+    BlockquoteButton,
+    CodeBlockButton,
+    SubButton,
+    SupButton,
+} from 'draft-js-buttons';
+
+const toolbarPlugin = createToolbarPlugin();
+const { Toolbar } = toolbarPlugin;
+const plugins = [toolbarPlugin];
 class AddPost extends Component<any, any> {
     editor: any;
     constructor(props: any) {
@@ -19,13 +42,13 @@ class AddPost extends Component<any, any> {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
-            editorState: EditorState.createEmpty()
+            editorState: createEditorStateWithText('test')
         }
         this.onChange = this.onChange.bind(this);
         this.setEditor = this.setEditor.bind(this)
     }
     onChange = (editorState) => {
-        console.log(editorState);
+        // console.log(editorState);
         this.setState({ editorState })
     };
     setEditor = (editor) => {
@@ -106,10 +129,33 @@ class AddPost extends Component<any, any> {
                                     filebrowserUploadUrl: process.env.API_ENDPOINT + "api/posts/upload1",
                                 }}
                             /> */}
+                            <Toolbar>
+                                {
+                                    // may be use React.Fragment instead of div to improve perfomance after React 16
+                                    (externalProps) => (
+                                        <div>
+                                            <BoldButton {...externalProps} />
+                                            <ItalicButton {...externalProps} />
+                                            <UnderlineButton {...externalProps} />
+                                            <CodeButton {...externalProps} />
+                                            <UnorderedListButton {...externalProps} />
+                                            <OrderedListButton {...externalProps} />
+                                            <BlockquoteButton {...externalProps} />
+                                            <CodeBlockButton {...externalProps} />
+                                            <HeadlineOneButton {...externalProps} />
+                                            <HeadlineTwoButton {...externalProps} />
+                                            <HeadlineThreeButton {...externalProps} />
+                                            <SubButton {...externalProps} />
+                                            <SupButton {...externalProps} />
+                                        </div>
+                                    )
+                                }
+                            </Toolbar>
                             <Editor
                                 ref={this.setEditor}
                                 editorState={this.state.editorState}
                                 onChange={this.onChange}
+                                plugins={plugins}
                             />
                             <div className="pull-right pt-3">
                                 <button type="submit" className="btn btn-primary mr-2" onClick={this.handleSubmit}>Save</button>
