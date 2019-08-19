@@ -10,10 +10,10 @@ import { spinnerService } from "../../service/spinner";
 import { Observable, Subject } from "rxjs";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// import { EditorState, RichUtils } from 'draft-js';
-import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
-import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
-import 'draft-js-static-toolbar-plugin/lib/plugin.css';
+import Draft, { EditorState, RichUtils, AtomicBlockUtils } from "draft-js";
+import Editor, { composeDecorators } from "draft-js-plugins-editor";
+// import createToolbarPlugin from "draft-js-static-toolbar-plugin";
+import "draft-js-static-toolbar-plugin/lib/plugin.css";
 
 import {
     ItalicButton,
@@ -29,11 +29,66 @@ import {
     CodeBlockButton,
     SubButton,
     SupButton,
-} from 'draft-js-buttons';
+} from "draft-js-buttons";
+// import ImageAdd from "./ImageAdd";
+import Immutable from "immutable";
+import Gist from "./Gist";
 
-const toolbarPlugin = createToolbarPlugin();
-const { Toolbar } = toolbarPlugin;
-const plugins = [toolbarPlugin];
+import createImagePlugin from "draft-js-image-plugin";
+import createFocusPlugin from "draft-js-focus-plugin";
+import createAlignmentPlugin from "draft-js-alignment-plugin";
+import createResizeablePlugin from "draft-js-resizeable-plugin";
+
+import "draft-js-alignment-plugin/lib/plugin.css";
+import "draft-js-focus-plugin/lib/plugin.css";
+import "draft-js-image-plugin/lib/plugin.css";
+import MyEditor from "../../component/my-editor/MyEditor";
+// const toolbarPlugin = createToolbarPlugin();
+
+const focusPlugin = createFocusPlugin();
+const resizeablePlugin = createResizeablePlugin();
+const alignmentPlugin = createAlignmentPlugin();
+
+const decorator = composeDecorators(
+    resizeablePlugin.decorator,
+    alignmentPlugin.decorator,
+    focusPlugin.decorator
+);
+const imagePlugin = createImagePlugin({ decorator });
+
+const { AlignmentTool } = alignmentPlugin;
+// const { Toolbar } = toolbarPlugin;
+
+const plugins = [
+    // toolbarPlugin,
+    imagePlugin,
+    focusPlugin,
+    alignmentPlugin,
+    resizeablePlugin
+];
+
+// const blockRenderMap = Immutable.Map({
+//     "code-block": {
+//         // element is used during paste or html conversion to auto match your component;
+//         // it is also retained as part of this.props.children and not stripped out
+//         element: "pre",
+//         wrapper: <Gist />,
+//     }
+// });
+function myBlockRenderer(contentBlock) {
+    const type = contentBlock.getType();
+    if (type === "atomic") {
+        return {
+            component: Gist,
+            editable: false,
+            props: {
+                foo: "",
+            },
+        };
+    }
+    // return null;
+}
+// const extendedBlockRenderMap = Draft.DefaultDraftBlockRenderMap.merge(blockRenderMap);
 class AddPost extends Component<any, any> {
     editor: any;
     constructor(props: any) {
@@ -42,18 +97,65 @@ class AddPost extends Component<any, any> {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
-            editorState: createEditorStateWithText('test')
-        }
+            editorState: EditorState.createEmpty()
+        };
         this.onChange = this.onChange.bind(this);
-        this.setEditor = this.setEditor.bind(this)
+        this.setEditor = this.setEditor.bind(this);
+        this.makeGist = this.makeGist.bind(this);
+        this.onURLInputKeyDown = this.onURLInputKeyDown.bind(this);
+        this.confirmMedia = this.confirmMedia.bind(this);
     }
+    onURLChange = (e) => this.setState({ urlValue: e.target.value });
+    onURLInputKeyDown(e) {
+        if (e.which === 13) {
+            this.confirmMedia(e);
+        }
+    }
+    confirmMedia(e) {
+        // this.setState({ urlType: "image" });
+        e.preventDefault();
+        const { editorState, urlValue, urlType } = this.state;
+        const contentState = editorState.getCurrentContent();
+        const contentStateWithEntity = contentState.createEntity(urlType, "IMMUTABLE", { src: urlValue });
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
+        this.setState({
+            editorState: AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " "),
+            showURLInput: false,
+            urlValue: ""
+        }, () => {
+            setTimeout(() => this.focus(), 0);
+        });
+    }
+
+    makeGist(type) {
+        const { editorState } = this.state;
+        const contentState = editorState.getCurrentContent();
+        const contentStateWithEntity = contentState.createEntity(
+            type,
+            "IMMUTABLE",
+            {}
+        );
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
+        this.setState({
+            editorState: AtomicBlockUtils.insertAtomicBlock(
+                newEditorState,
+                entityKey,
+                " "
+            )
+        });
+    }
+
     onChange = (editorState) => {
         // console.log(editorState);
-        this.setState({ editorState })
-    };
+        this.setState({ editorState });
+    }
+
     setEditor = (editor) => {
         this.editor = editor;
-    };
+    }
+
     handleChange(event: any) {
         this.setState({ [event.target.name]: event.target.value });
     }
@@ -69,13 +171,20 @@ class AddPost extends Component<any, any> {
             // console.log(error);
         });
     }
-    notify = () => {
-        this.setState({ loading: true });
-    }
     handleDate = (date: any) => {
         this.setState({
             date,
         });
+    }
+
+    myBlockStyleFn = (contentBlock) => {
+        const type = contentBlock.getType();
+        if (type === "blockquote") {
+            return "superFancyBlockquote";
+        }
+    }
+    focus = () => {
+        this.editor.focus();
     }
 
     render() {
@@ -129,7 +238,17 @@ class AddPost extends Component<any, any> {
                                     filebrowserUploadUrl: process.env.API_ENDPOINT + "api/posts/upload1",
                                 }}
                             /> */}
-                            <Toolbar>
+                            {/* <div>
+                                <input
+                                    onChange={this.onURLChange}
+                                    ref="url"
+                                    type="text"
+                                    value={this.state.urlValue}
+                                    onKeyDown={this.onURLInputKeyDown}
+                                />
+                                <button type="button" className="btn btn-default" onMouseDown={this.confirmMedia}>Confirm</button>
+                            </div> */}
+                            {/* <Toolbar>
                                 {
                                     // may be use React.Fragment instead of div to improve perfomance after React 16
                                     (externalProps) => (
@@ -147,19 +266,33 @@ class AddPost extends Component<any, any> {
                                             <HeadlineThreeButton {...externalProps} />
                                             <SubButton {...externalProps} />
                                             <SupButton {...externalProps} />
+                                            <button type="button" onClick={() => this.makeGist("gist")}>gist</button>
                                         </div>
                                     )
                                 }
-                            </Toolbar>
-                            <Editor
-                                ref={this.setEditor}
+                            </Toolbar> */}
+                            {/* <div className="editor" onClick={this.focus}>
+                                <Editor
+                                    ref={this.setEditor}
+                                    editorState={this.state.editorState}
+                                    onChange={this.onChange}
+                                    plugins={plugins}
+                                    blockStyleFn={this.myBlockStyleFn}
+                                    // blockRenderMap={extendedBlockRenderMap}
+                                    // blockRendererFn={myBlockRenderer}
+                                    blockRendererFn={mediaBlockRenderer}
+                                />
+                            </div> */}
+                            <MyEditor />
+                            {/* <AlignmentTool /> */}
+                            {/* <ImageAdd
                                 editorState={this.state.editorState}
                                 onChange={this.onChange}
-                                plugins={plugins}
-                            />
+                                modifier={imagePlugin.addImage}
+                            /> */}
                             <div className="pull-right pt-3">
                                 <button type="submit" className="btn btn-primary mr-2" onClick={this.handleSubmit}>Save</button>
-                                <button type="button" className="btn btn-primary mr-2" onClick={this.notify}>Publish</button>
+                                <button type="button" className="btn btn-primary mr-2" onClick={() => alert("implementation pending")}>Publish</button>
                             </div>
                             <div className="clearfix" />
                         </div>
@@ -171,9 +304,43 @@ class AddPost extends Component<any, any> {
     }
 }
 
+function mediaBlockRenderer(block) {
+    if (block.getType() === "atomic") {
+        return { component: Media, editable: false };
+    }
+    return null;
+}
+const Audio = (props) => {
+    return <audio controls src={props.src} />;
+};
+
+const Image = (props) => {
+    return <img src={props.src} alt="Example" />;
+};
+
+const Video = (props) => {
+    return <video controls src={props.src} />;
+};
+
+const Media = (props) => {
+    const entity = props.contentState.getEntity(props.block.getEntityAt(0));
+    const { src } = entity.getData();
+    // const type = entity.getType();
+    const type = "image";
+    let media;
+    // if (type === "audio") {
+    //     media = <Audio src={src} />;
+    // } else if (type === "image") {
+    media = <Image src={src} />;
+    // } else if (type === "video") {
+    //     media = <Video src={src} />;
+    // }
+    return media;
+};
 // const mapStateToProps = (state: any) => ({
 //     todos: state.post
 // })
 
 // export default connect(mapStateToProps)(AddPost);
+
 export default AddPost;
