@@ -6,6 +6,7 @@ import "draft-js-image-plugin/lib/plugin.css";
 import "draft-js-alignment-plugin/lib/plugin.css";
 import "draft-js-side-toolbar-plugin/lib/plugin.css";
 import "draft-js-inline-toolbar-plugin/lib/plugin.css";
+import "draft-js-video-plugin/lib/plugin.css";
 
 import Editor, {
     composeDecorators,
@@ -18,9 +19,11 @@ import createFocusPlugin from "draft-js-focus-plugin";
 import createResizeablePlugin from "draft-js-resizeable-plugin";
 import createSideToolbarPlugin from "draft-js-side-toolbar-plugin";
 import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
+import createVideoPlugin from "draft-js-video-plugin";
 
 import "./MyEditor.css";
 import ImageAdd from "./image-add/ImageAdd";
+import VideoAdd from "./video-add/VideoAdd";
 
 const sideToolbarPlugin = createSideToolbarPlugin();
 const focusPlugin = createFocusPlugin();
@@ -32,12 +35,19 @@ const { InlineToolbar } = inlineToolbarPlugin;
 const { SideToolbar } = sideToolbarPlugin;
 const { AlignmentTool } = alignmentPlugin;
 
-const decorator = composeDecorators(
+const decoratorVideo = composeDecorators(
     resizeablePlugin.decorator,
     alignmentPlugin.decorator,
     focusPlugin.decorator
 );
-const imagePlugin = createImagePlugin({ decorator });
+const videoPlugin = createVideoPlugin({ decoratorVideo });
+
+const decoratorImage = composeDecorators(
+    resizeablePlugin.decorator,
+    alignmentPlugin.decorator,
+    focusPlugin.decorator
+);
+const imagePlugin = createImagePlugin({ decoratorImage });
 
 const plugins = [
     focusPlugin,
@@ -45,20 +55,23 @@ const plugins = [
     resizeablePlugin,
     imagePlugin,
     sideToolbarPlugin,
-    inlineToolbarPlugin
+    inlineToolbarPlugin,
+    videoPlugin
 ];
 
-export default class MyEditor extends Component {
+export default class MyEditor extends Component<any, any> {
     editor: any;
-
+    // if(this.props.editorState === "") {
     state = {
-        editorState: EditorState.createEmpty()
+        editorState: this.props.editorState
     };
+    // }
 
     onChange = (editorState) => {
         this.setState({
             editorState
         });
+        this.props.onEditorChange(editorState);
     }
 
     focus = () => { this.editor.focus(); };
@@ -66,14 +79,19 @@ export default class MyEditor extends Component {
     render() {
         return (
             <div className="row">
-                <div className="col-md-1">
+                <div className="col-md-12">
                     <ImageAdd
                         editorState={this.state.editorState}
                         onChange={this.onChange}
                         modifier={imagePlugin.addImage}
                     />
+                    <VideoAdd
+                        editorState={this.state.editorState}
+                        onChange={this.onChange}
+                        modifier={videoPlugin.addVideo}
+                    />
                 </div>
-                <div className="col-md-11">
+                <div className="col-md-12">
                     <div className="editor" onClick={this.focus}>
                         <Editor
                             editorState={this.state.editorState}

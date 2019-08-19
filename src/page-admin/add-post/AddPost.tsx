@@ -10,62 +10,62 @@ import { spinnerService } from "../../service/spinner";
 import { Observable, Subject } from "rxjs";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Draft, { EditorState, RichUtils, AtomicBlockUtils } from "draft-js";
-import Editor, { composeDecorators } from "draft-js-plugins-editor";
+import Draft, { EditorState, RichUtils, AtomicBlockUtils, convertFromRaw, convertToRaw } from "draft-js";
+// import Editor, { composeDecorators } from "draft-js-plugins-editor";
 // import createToolbarPlugin from "draft-js-static-toolbar-plugin";
-import "draft-js-static-toolbar-plugin/lib/plugin.css";
+// import "draft-js-static-toolbar-plugin/lib/plugin.css";
 
-import {
-    ItalicButton,
-    BoldButton,
-    UnderlineButton,
-    CodeButton,
-    HeadlineOneButton,
-    HeadlineTwoButton,
-    HeadlineThreeButton,
-    UnorderedListButton,
-    OrderedListButton,
-    BlockquoteButton,
-    CodeBlockButton,
-    SubButton,
-    SupButton,
-} from "draft-js-buttons";
+// import {
+//     ItalicButton,
+//     BoldButton,
+//     UnderlineButton,
+//     CodeButton,
+//     HeadlineOneButton,
+//     HeadlineTwoButton,
+//     HeadlineThreeButton,
+//     UnorderedListButton,
+//     OrderedListButton,
+//     BlockquoteButton,
+//     CodeBlockButton,
+//     SubButton,
+//     SupButton,
+// } from "draft-js-buttons";
 // import ImageAdd from "./ImageAdd";
-import Immutable from "immutable";
+// import Immutable from "immutable";
 import Gist from "./Gist";
 
-import createImagePlugin from "draft-js-image-plugin";
-import createFocusPlugin from "draft-js-focus-plugin";
-import createAlignmentPlugin from "draft-js-alignment-plugin";
-import createResizeablePlugin from "draft-js-resizeable-plugin";
+// import createImagePlugin from "draft-js-image-plugin";
+// import createFocusPlugin from "draft-js-focus-plugin";
+// import createAlignmentPlugin from "draft-js-alignment-plugin";
+// import createResizeablePlugin from "draft-js-resizeable-plugin";
 
-import "draft-js-alignment-plugin/lib/plugin.css";
-import "draft-js-focus-plugin/lib/plugin.css";
-import "draft-js-image-plugin/lib/plugin.css";
+// import "draft-js-alignment-plugin/lib/plugin.css";
+// import "draft-js-focus-plugin/lib/plugin.css";
+// import "draft-js-image-plugin/lib/plugin.css";
 import MyEditor from "../../component/my-editor/MyEditor";
-// const toolbarPlugin = createToolbarPlugin();
+// // const toolbarPlugin = createToolbarPlugin();
 
-const focusPlugin = createFocusPlugin();
-const resizeablePlugin = createResizeablePlugin();
-const alignmentPlugin = createAlignmentPlugin();
+// const focusPlugin = createFocusPlugin();
+// const resizeablePlugin = createResizeablePlugin();
+// const alignmentPlugin = createAlignmentPlugin();
 
-const decorator = composeDecorators(
-    resizeablePlugin.decorator,
-    alignmentPlugin.decorator,
-    focusPlugin.decorator
-);
-const imagePlugin = createImagePlugin({ decorator });
+// const decorator = composeDecorators(
+//     resizeablePlugin.decorator,
+//     alignmentPlugin.decorator,
+//     focusPlugin.decorator
+// );
+// const imagePlugin = createImagePlugin({ decorator });
 
-const { AlignmentTool } = alignmentPlugin;
+// const { AlignmentTool } = alignmentPlugin;
 // const { Toolbar } = toolbarPlugin;
 
-const plugins = [
-    // toolbarPlugin,
-    imagePlugin,
-    focusPlugin,
-    alignmentPlugin,
-    resizeablePlugin
-];
+// const plugins = [
+//     // toolbarPlugin,
+//     imagePlugin,
+//     focusPlugin,
+//     alignmentPlugin,
+//     resizeablePlugin
+// ];
 
 // const blockRenderMap = Immutable.Map({
 //     "code-block": {
@@ -75,19 +75,18 @@ const plugins = [
 //         wrapper: <Gist />,
 //     }
 // });
-function myBlockRenderer(contentBlock) {
-    const type = contentBlock.getType();
-    if (type === "atomic") {
-        return {
-            component: Gist,
-            editable: false,
-            props: {
-                foo: "",
-            },
-        };
-    }
-    // return null;
-}
+// function myBlockRenderer(contentBlock) {
+//     const type = contentBlock.getType();
+//     if (type === "atomic") {
+//         return {
+//             component: Gist,
+//             editable: false,
+//             props: {
+//                 foo: "",
+//             },
+//         };
+//     }
+// }
 // const extendedBlockRenderMap = Draft.DefaultDraftBlockRenderMap.merge(blockRenderMap);
 class AddPost extends Component<any, any> {
     editor: any;
@@ -100,69 +99,72 @@ class AddPost extends Component<any, any> {
             editorState: EditorState.createEmpty()
         };
         this.onChange = this.onChange.bind(this);
-        this.setEditor = this.setEditor.bind(this);
-        this.makeGist = this.makeGist.bind(this);
-        this.onURLInputKeyDown = this.onURLInputKeyDown.bind(this);
-        this.confirmMedia = this.confirmMedia.bind(this);
+        // this.setEditor = this.setEditor.bind(this);
+        // this.makeGist = this.makeGist.bind(this);
+        // this.onURLInputKeyDown = this.onURLInputKeyDown.bind(this);
+        // this.confirmMedia = this.confirmMedia.bind(this);
     }
-    onURLChange = (e) => this.setState({ urlValue: e.target.value });
-    onURLInputKeyDown(e) {
-        if (e.which === 13) {
-            this.confirmMedia(e);
-        }
-    }
-    confirmMedia(e) {
-        // this.setState({ urlType: "image" });
-        e.preventDefault();
-        const { editorState, urlValue, urlType } = this.state;
-        const contentState = editorState.getCurrentContent();
-        const contentStateWithEntity = contentState.createEntity(urlType, "IMMUTABLE", { src: urlValue });
-        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-        const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
-        this.setState({
-            editorState: AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " "),
-            showURLInput: false,
-            urlValue: ""
-        }, () => {
-            setTimeout(() => this.focus(), 0);
-        });
-    }
+    // onURLChange = (e) => this.setState({ urlValue: e.target.value });
+    // onURLInputKeyDown(e) {
+    //     if (e.which === 13) {
+    //         this.confirmMedia(e);
+    //     }
+    // }
+    // confirmMedia(e) {
+    //     // this.setState({ urlType: "image" });
+    //     e.preventDefault();
+    //     const { editorState, urlValue, urlType } = this.state;
+    //     const contentState = editorState.getCurrentContent();
+    //     const contentStateWithEntity = contentState.createEntity(urlType, "IMMUTABLE", { src: urlValue });
+    //     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    //     const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
+    //     this.setState({
+    //         editorState: AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " "),
+    //         showURLInput: false,
+    //         urlValue: ""
+    //     }, () => {
+    //         setTimeout(() => this.focus(), 0);
+    //     });
+    // }
 
-    makeGist(type) {
-        const { editorState } = this.state;
-        const contentState = editorState.getCurrentContent();
-        const contentStateWithEntity = contentState.createEntity(
-            type,
-            "IMMUTABLE",
-            {}
-        );
-        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-        const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
-        this.setState({
-            editorState: AtomicBlockUtils.insertAtomicBlock(
-                newEditorState,
-                entityKey,
-                " "
-            )
-        });
-    }
+    // makeGist(type) {
+    //     const { editorState } = this.state;
+    //     const contentState = editorState.getCurrentContent();
+    //     const contentStateWithEntity = contentState.createEntity(
+    //         type,
+    //         "IMMUTABLE",
+    //         {}
+    //     );
+    //     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    //     const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
+    //     this.setState({
+    //         editorState: AtomicBlockUtils.insertAtomicBlock(
+    //             newEditorState,
+    //             entityKey,
+    //             " "
+    //         )
+    //     });
+    // }
 
     onChange = (editorState) => {
         // console.log(editorState);
         this.setState({ editorState });
     }
 
-    setEditor = (editor) => {
-        this.editor = editor;
-    }
+    // setEditor = (editor) => {
+    //     this.editor = editor;
+    // }
 
     handleChange(event: any) {
         this.setState({ [event.target.name]: event.target.value });
     }
 
     handleSubmit(event: any) {
-        spinnerService.showLoading(true);
         event.preventDefault();
+        // console.log(JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent())));
+        this.setState({ content: JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent())) });
+        spinnerService.showLoading(true);
+
         axios.post(process.env.API_ENDPOINT + "api/posts/save", this.state).then((response: any) => {
             toast.success("Saved Successfully");
             spinnerService.showLoading(false);
@@ -177,15 +179,15 @@ class AddPost extends Component<any, any> {
         });
     }
 
-    myBlockStyleFn = (contentBlock) => {
-        const type = contentBlock.getType();
-        if (type === "blockquote") {
-            return "superFancyBlockquote";
-        }
-    }
-    focus = () => {
-        this.editor.focus();
-    }
+    // myBlockStyleFn = (contentBlock) => {
+    //     const type = contentBlock.getType();
+    //     if (type === "blockquote") {
+    //         return "superFancyBlockquote";
+    //     }
+    // }
+    // focus = () => {
+    //     this.editor.focus();
+    // }
 
     render() {
         return (
@@ -283,7 +285,7 @@ class AddPost extends Component<any, any> {
                                     blockRendererFn={mediaBlockRenderer}
                                 />
                             </div> */}
-                            <MyEditor />
+                            <MyEditor editorState={this.state.editorState} onEditorChange={this.onChange} />
                             {/* <AlignmentTool /> */}
                             {/* <ImageAdd
                                 editorState={this.state.editorState}
@@ -304,39 +306,39 @@ class AddPost extends Component<any, any> {
     }
 }
 
-function mediaBlockRenderer(block) {
-    if (block.getType() === "atomic") {
-        return { component: Media, editable: false };
-    }
-    return null;
-}
-const Audio = (props) => {
-    return <audio controls src={props.src} />;
-};
+// function mediaBlockRenderer(block) {
+//     if (block.getType() === "atomic") {
+//         return { component: Media, editable: false };
+//     }
+//     return null;
+// }
+// const Audio = (props) => {
+//     return <audio controls src={props.src} />;
+// };
 
-const Image = (props) => {
-    return <img src={props.src} alt="Example" />;
-};
+// const Image = (props) => {
+//     return <img src={props.src} alt="Example" />;
+// };
 
-const Video = (props) => {
-    return <video controls src={props.src} />;
-};
+// const Video = (props) => {
+//     return <video controls src={props.src} />;
+// };
 
-const Media = (props) => {
-    const entity = props.contentState.getEntity(props.block.getEntityAt(0));
-    const { src } = entity.getData();
-    // const type = entity.getType();
-    const type = "image";
-    let media;
-    // if (type === "audio") {
-    //     media = <Audio src={src} />;
-    // } else if (type === "image") {
-    media = <Image src={src} />;
-    // } else if (type === "video") {
-    //     media = <Video src={src} />;
-    // }
-    return media;
-};
+// const Media = (props) => {
+//     const entity = props.contentState.getEntity(props.block.getEntityAt(0));
+//     const { src } = entity.getData();
+//     // const type = entity.getType();
+//     const type = "image";
+//     let media;
+//     // if (type === "audio") {
+//     //     media = <Audio src={src} />;
+//     // } else if (type === "image") {
+//     media = <Image src={src} />;
+//     // } else if (type === "video") {
+//     //     media = <Video src={src} />;
+//     // }
+//     return media;
+// };
 // const mapStateToProps = (state: any) => ({
 //     todos: state.post
 // })

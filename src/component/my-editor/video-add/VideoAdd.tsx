@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import "./ImageAdd.css";
+import "./VideoAdd.css";
 
-export default class ImageAdd extends Component<any, any> {
+export default class VideoAdd extends Component<any, any> {
     // Start the popover closed
     state = {
-        url:
-            "https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg",
-        open: false
+        url: "",
+        open: false,
     };
     preventNextClose: boolean;
 
@@ -29,7 +28,7 @@ export default class ImageAdd extends Component<any, any> {
         if (!this.state.open) {
             this.preventNextClose = true;
             this.setState({
-                open: true
+                open: true,
             });
         }
     }
@@ -37,16 +36,16 @@ export default class ImageAdd extends Component<any, any> {
     closePopover = () => {
         if (!this.preventNextClose && this.state.open) {
             this.setState({
-                open: false
+                open: false,
             });
         }
 
         this.preventNextClose = false;
     }
 
-    addImage = () => {
+    addVideo = () => {
         const { editorState, onChange } = this.props;
-        onChange(this.props.modifier(editorState, this.state.url));
+        onChange(this.props.modifier(editorState, { src: this.state.url }));
     }
 
     changeUrl = (evt) => {
@@ -54,32 +53,34 @@ export default class ImageAdd extends Component<any, any> {
     }
 
     render() {
-        const popoverClassName = this.state.open
-            ? "addImagePopover"
-            : "addImageClosedPopover";
-        const buttonClassName = this.state.open
-            ? "addImagePressedButton"
-            : "addImageButton";
+        const popoverClassName = this.state.open ?
+            "addVideoPopover" :
+            "addVideoClosedPopover";
+        const buttonClassName = this.state.open ?
+            "addVideoPressedButton" :
+            "addVideoButton";
 
         return (
-            <div className="addImage">
+            <div className="addVideo" >
                 <button
                     className={buttonClassName}
                     onMouseUp={this.openPopover}
                     type="button">
-                    I
+                    V
                 </button>
-                <div className={popoverClassName} onClick={this.onPopoverClick}>
+                <div
+                    className={popoverClassName}
+                    onClick={this.onPopoverClick}>
                     <input
                         type="text"
-                        placeholder="Paste the image url …"
-                        className="addImageInput"
+                        placeholder="Paste the video url …"
+                        className="addVideoInput"
                         onChange={this.changeUrl}
                         value={this.state.url} />
                     <button
-                        className="addImageConfirmButton"
+                        className="addVideoConfirmButton"
                         type="button"
-                        onClick={this.addImage}>
+                        onClick={this.addVideo}>
                         Add
                     </button>
                 </div>

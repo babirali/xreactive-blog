@@ -4,14 +4,21 @@ import "./PostDetail.css";
 import PostComment from "../../component/post-comment/PostComment";
 import ListComment from "../../component/list-comment/ListComment";
 import { throws } from "assert";
+import Draft, { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 import { spinnerService } from "../../service/spinner";
 import axios from "axios";
 import moment from "moment";
+import draftToHtml from "draftjs-to-html";
+
 class PostDetail extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      post: {},
+      post: {
+      },
+      content: "",
+      editorState: "",
     };
   }
   componentWillMount() {
@@ -19,6 +26,13 @@ class PostDetail extends Component<any, any> {
     axios.get(process.env.API_ENDPOINT + "api/posts/get/" + this.props.match.params.id).then((response: any) => {
       spinnerService.showLoading(false);
       this.setState({ post: response.data });
+      this.setState({ editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(this.state.post.content))) });
+      // const rawContentState = convertToRaw(this.state.editorState.getCurrentContent());
+      this.setState({ content: stateToHTML(this.state.editorState.getCurrentContent()) });
+      // const markup = draftToHtml(
+      //   rawContentState
+      // );
+      // this.setState({ content: markup });
     }).catch((error: any) => {
       // console.log(error);
     });
@@ -33,8 +47,7 @@ class PostDetail extends Component<any, any> {
           by <a href="#"> {this.state.post.postBy}</a>
         </p>
         <img className="img-fluid rounded" src={this.state.post.mainImg} alt="" />
-        <div dangerouslySetInnerHTML={{ __html: this.state.post.content }}></div>
-        <script src="https://gist.github.com/babirali/0327b7988eab28c22cdaae51f6932efd.js"></script>
+        <div dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
         {/* <PostComment />
               <ListComment /> */}
       </div>

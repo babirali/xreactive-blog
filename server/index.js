@@ -9,8 +9,8 @@ const mongoose = require('mongoose');
 
 //Configure Mongoose
 if (process.env.PORT == 3022) {
-    //mongoose.connect('mongodb://10.0.75.1/xreactive', { useNewUrlParser: true });
-    mongoose.connect('mongodb://xreactive-mongodb:uTEXzzvZ8qCATRALDJGpP8HqklCHtqXxAc7DQUOzb88WT6vQNVLb7KMNcSrfsLjc98xF55oOp890cusk4WWTlg==@xreactive-mongodb.documents.azure.com:10255/xreactive?ssl=true&replicaSet=globaldb', { useNewUrlParser: true });
+    mongoose.connect('mongodb://10.0.75.1/xreactive', { useNewUrlParser: true });
+    // mongoose.connect('mongodb://xreactive-mongodb:uTEXzzvZ8qCATRALDJGpP8HqklCHtqXxAc7DQUOzb88WT6vQNVLb7KMNcSrfsLjc98xF55oOp890cusk4WWTlg==@xreactive-mongodb.documents.azure.com:10255/xreactive?ssl=true&replicaSet=globaldb', { useNewUrlParser: true });
 } else {
     mongoose.connect('mongodb://xreactive-mongodb:uTEXzzvZ8qCATRALDJGpP8HqklCHtqXxAc7DQUOzb88WT6vQNVLb7KMNcSrfsLjc98xF55oOp890cusk4WWTlg==@xreactive-mongodb.documents.azure.com:10255/xreactive?ssl=true&replicaSet=globaldb', { useNewUrlParser: true });
 }
