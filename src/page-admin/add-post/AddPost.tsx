@@ -88,6 +88,8 @@ import MyEditor from "../../component/my-editor/MyEditor";
 //     }
 // }
 // const extendedBlockRenderMap = Draft.DefaultDraftBlockRenderMap.merge(blockRenderMap);
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 class AddPost extends Component<any, any> {
     editor: any;
     constructor(props: any) {
@@ -285,7 +287,13 @@ class AddPost extends Component<any, any> {
                                     blockRendererFn={mediaBlockRenderer}
                                 />
                             </div> */}
-                            <MyEditor editorState={this.state.editorState} onEditorChange={this.onChange} />
+                            {/* <MyEditor editorState={this.state.editorState} onEditorChange={this.onChange} /> */}
+                            <Editor
+                                editorState={this.state.editorState}
+                                wrapperClassName="demo-wrapper"
+                                editorClassName="demo-editor"
+                                onEditorStateChange={this.onChange}
+                            />
                             {/* <AlignmentTool /> */}
                             {/* <ImageAdd
                                 editorState={this.state.editorState}

@@ -27,7 +27,10 @@ import VideoAdd from "./video-add/VideoAdd";
 
 const sideToolbarPlugin = createSideToolbarPlugin();
 const focusPlugin = createFocusPlugin();
-const resizeablePlugin = createResizeablePlugin();
+const resizeablePlugin = createResizeablePlugin({
+    vertical: "relative",
+    horizontal: "relative"
+});
 const alignmentPlugin = createAlignmentPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 
@@ -35,19 +38,13 @@ const { InlineToolbar } = inlineToolbarPlugin;
 const { SideToolbar } = sideToolbarPlugin;
 const { AlignmentTool } = alignmentPlugin;
 
-const decoratorVideo = composeDecorators(
+const decorator = composeDecorators(
     resizeablePlugin.decorator,
     alignmentPlugin.decorator,
     focusPlugin.decorator
 );
-const videoPlugin = createVideoPlugin({ decoratorVideo });
-
-const decoratorImage = composeDecorators(
-    resizeablePlugin.decorator,
-    alignmentPlugin.decorator,
-    focusPlugin.decorator
-);
-const imagePlugin = createImagePlugin({ decoratorImage });
+const videoPlugin = createVideoPlugin({ decorator });
+const imagePlugin = createImagePlugin({ decorator });
 
 const plugins = [
     focusPlugin,
@@ -61,11 +58,9 @@ const plugins = [
 
 export default class MyEditor extends Component<any, any> {
     editor: any;
-    // if(this.props.editorState === "") {
     state = {
         editorState: this.props.editorState
     };
-    // }
 
     onChange = (editorState) => {
         this.setState({
