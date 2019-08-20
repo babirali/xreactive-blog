@@ -23,6 +23,7 @@ import Draft, { EditorState, RichUtils, AtomicBlockUtils, convertFromRaw, conver
 // }
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import useForm from "../../component/useForm/useForm";
 const AddPost = () => {
     // editor: any;
     // constructor(props: any) {
@@ -70,16 +71,27 @@ const AddPost = () => {
     //         )
     //     });
     // }
-    const [state, setState] = useState({ editorState: EditorState.createEmpty() });
+    // myBlockStyleFn = (contentBlock) => {
+    //     const type = contentBlock.getType();
+    //     if (type === "blockquote") {
+    //         return "superFancyBlockquote";
+    //     }
+    // }
+    // focus = () => {
+    //     this.editor.focus();
+    // }
     // const onChange = (editorState) => {
     //     this.setState({ editorState });
     // };
     // handleChange(event: any) {
     //     this.setState({ [event.target.name]: event.target.value });
     // }
-    const handleSubmit = (event: any) => {
-        event.preventDefault();
-        console.log(state.editorState);
+    const [state, setState] = useState({ editorState: EditorState.createEmpty() });
+    const [date, setDate] = useState(new Date());
+    const save = (event: any) => {
+        // event.preventDefault();
+        // tslint:disable-next-line: no-console
+        console.log(state.editorState); console.log(inputs);
         // this.setState({ content: JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent())) });
         // spinnerService.showLoading(true);
         // axios.post(process.env.API_ENDPOINT + "api/posts/save", this.state).then((response: any) => {
@@ -90,60 +102,69 @@ const AddPost = () => {
         //     // console.log(error);
         // });
     };
-    const handleDate = (date: any) => {
-        this.setState({
-            date,
-        });
-    }
-    // myBlockStyleFn = (contentBlock) => {
-    //     const type = contentBlock.getType();
-    //     if (type === "blockquote") {
-    //         return "superFancyBlockquote";
-    //     }
-    // }
-    // focus = () => {
-    //     this.editor.focus();
-    // }
+    const formData = {
+        values: {
+            heading: "",
+            img: "",
+            mainImg: "",
+            postBy: "",
+            tags: ""
+        },
+        errors: {
+            heading: "",
+            img: "",
+            mainImg: "",
+            postBy: "",
+            tags: ""
+        },
+        validations: {
+            heading: {
+                required: true
+            }
+        }
+    };
+    const { inputs, handleChange, handleSubmit } = useForm(save, formData);
     // render() {
     return (
         <div>
             <ToastContainer />
             <h1>Add Post</h1>
-            <form>
+            <form onSubmit={handleSubmit} noValidate>
                 <div className="row">
-                    {/* <div className="col-md-6">
+                    <div className="col-md-6">
                         <div className="form-group">
                             <label htmlFor="heading">Heading</label>
-                            <input type="text" className="form-control" name="heading" value={this.state.heading} onChange={this.handleChange} id="heading" aria-describedby="heading" placeholder="Heading" />
+                            <input type="text" className="form-control" name="heading" value={inputs.values ? inputs.values.heading : ""} onChange={handleChange} id="heading" aria-describedby="heading" placeholder="Heading" required />
                         </div>
                         <div className="form-group">
                             <label htmlFor="by">By</label>
-                            <input type="text" className="form-control" name="postBy" value={this.state.postBy} onChange={this.handleChange} id="postBy" placeholder="Name" />
+                            <input type="text" className="form-control" name="postBy" value={inputs.values ? inputs.values.postBy : ""} onChange={handleChange} id="postBy" placeholder="Name" required />
                         </div>
                         <div className="form-group">
                             <label htmlFor="date">Date</label>
                             <DatePicker
-                                    className="form-control"
-                                    selected={this.state.date}
-                                    onChange={handleDate}
+                                name="date"
+                                className="form-control"
+                                selected={date}
+                                onChange={(d) => setDate(d)}
                             />
-                            </div>
+                        </div>
                     </div>
                     <div className="col-md-6">
                         <div className="form-group">
                             <label htmlFor="date">List Image</label>
-                            <input type="text" className="form-control" name="img" value={this.state.img} onChange={this.handleChange} id="img" placeholder="Image" />
+                            <input type="text" className="form-control" name="img" value={inputs.values ? inputs.values.img : ""} onChange={handleChange} id="img" placeholder="Image" required />
                         </div>
                         <div className="form-group">
                             <label htmlFor="date">Detail Image</label>
-                            <input type="text" className="form-control" name="mainImg" value={this.state.mainImg} onChange={this.handleChange} id="mainImg" placeholder="Image" />
+                            <input type="text" className="form-control" name="mainImg" value={inputs.values ? inputs.values.mainImg : ""} onChange={handleChange} id="mainImg" placeholder="Image" required />
                         </div>
                         <div className="form-group">
                             <label htmlFor="tags">Tags</label>
                             <input type="text" className="form-control"
-                                name="tags" value={this.state.tags} onChange={this.handleChange} id="tags" placeholder="Tags" />
+                                name="tags" value={inputs.values ? inputs.values.tags : ""} onChange={handleChange} id="tags" placeholder="Tags" required />
                         </div>
-                    </div> */}
+                    </div>
                     <div className="col-md-12 pb-5">
                         <Editor
                             wrapperClassName="wrapper-class"
@@ -152,7 +173,7 @@ const AddPost = () => {
                             onEditorStateChange={(editor) => setState({ editorState: editor })}
                         />
                         <div className="pull-right pt-4">
-                            <button type="submit" className="btn btn-primary mr-2" onClick={handleSubmit}>Save</button>
+                            <button type="submit" className="btn btn-primary mr-2">Save</button>
                             <button type="button" className="btn btn-primary mr-2" onClick={() => alert("implementation pending")}>Publish</button>
                         </div>
                         <div className="clearfix" />
