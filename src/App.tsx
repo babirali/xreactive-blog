@@ -40,6 +40,7 @@ const test: any = {
 };
 import { switchMap, map } from "rxjs/operators";
 import SideBar from "./component/side-bar/SideBar";
+import ImageList from "./page-admin/image-list/Image-list";
 
 // initialize store
 const store = createStore(reducer, test);
@@ -75,6 +76,7 @@ class App extends Component<any, any> {
                 <div className="main">
                   <PrivateRoute path="/listpost" component={ListPost} />
                   <PrivateRoute path="/addpost" exact component={AddPost} />
+                  <PrivateRoute path="/imagelist" exact component={ImageList} />
                   <PrivateRoute path="/tags" component={Tags} />
                   <PrivateRoute path="/category" exact component={Category} />
                 </div>

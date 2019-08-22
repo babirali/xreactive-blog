@@ -86,10 +86,56 @@ const AddPost = () => {
     // handleChange(event: any) {
     //     this.setState({ [event.target.name]: event.target.value });
     // }
+    const formData = {
+        values: {
+            heading: "",
+            img: "",
+            mainImg: "",
+            postBy: "",
+            tags: ""
+        },
+        validations: {
+            heading: {
+                required: {
+                    flag: true,
+                    message: "Image is required"
+                }
+            },
+            img: {
+                required: {
+                    flag: true,
+                    message: "Image is required"
+                },
+                pattern: {
+                    flag: "test",
+                    message: "Invalid URL"
+                }
+            },
+            mainImg: {
+                required: {
+                    flag: true,
+                    message: "Image is required"
+                }
+            },
+            postBy: {
+                required: {
+                    flag: true,
+                    message: "Image is required"
+                }
+            },
+            tags: {
+                required: {
+                    flag: true,
+                    message: "Image is required"
+                }
+            }
+        }
+    };
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [date, setDate] = useState(new Date());
+
     const save = () => {
-        if (formValid) {
+        if (formValid && (date !== null || date !== undefined) && (editorState.getCurrentContent().hasText())) {
             spinnerService.showLoading(true);
             let data = inputs.values;
             data = {
@@ -107,35 +153,11 @@ const AddPost = () => {
         }
 
     };
-    const formData = {
-        values: {
-            heading: "",
-            img: "",
-            mainImg: "",
-            postBy: "",
-            tags: ""
-        },
-        validations: {
-            heading: {
-                required: true,
-                pattern: "test"
-            },
-            img: {
-                required: true
-            },
-            mainImg: {
-                required: true
-            },
-            postBy: {
-                required: true
-            },
-            tags: {
-                required: true
-            }
-        }
+    const { inputs, handleChange, handleSubmit, clearForm, formValid, isDirty } = useForm(save, formData);
+    const clear = () => {
+        clearForm();
+        setEditorState(EditorState.createEmpty());
     };
-    const { inputs, handleChange, handleSubmit, formValid, isDirty } = useForm(save, formData);
-    // render() {
     return (
         <div>
             <ToastContainer />
@@ -145,52 +167,57 @@ const AddPost = () => {
                     <div className="col-md-6">
                         <div className="form-group">
                             <label htmlFor="heading">Heading</label>
-                            <input type="text" className="form-control" name="heading" value={inputs.values ? inputs.values.heading : ""} onChange={handleChange} id="heading" aria-describedby="heading" placeholder="Heading" required />
+                            <input type="text" tabIndex={1} className="form-control" name="heading" value={inputs.values ? inputs.values.heading : ""} onChange={handleChange} id="heading" aria-describedby="heading" placeholder="Heading" required />
                             <span className="text-danger">{inputs.errors ? inputs.errors.heading : ""}</span>
                         </div>
                         <div className="form-group">
                             <label htmlFor="by">By</label>
-                            <input type="text" className="form-control" name="postBy" value={inputs.values ? inputs.values.postBy : ""} onChange={handleChange} id="postBy" placeholder="Name" required />
+                            <input type="text" tabIndex={3} className="form-control" name="postBy" value={inputs.values ? inputs.values.postBy : ""} onChange={handleChange} id="postBy" placeholder="Name" required />
                             <span className="text-danger">{inputs.errors ? inputs.errors.postBy : ""}</span>
                         </div>
                         <div className="form-group">
                             <label htmlFor="date">Date</label>
                             <DatePicker
+                                tabIndex={5}
                                 name="date"
                                 className="form-control"
                                 selected={date}
-                                onChange={(d) => setDate(d)}
+                                onChange={(d) => { setDate(d); }}
                             />
+                            {((date === null || date === undefined) && isDirty) ? <span className="text-danger">Text is Required.</span> : ""}
                         </div>
                     </div>
                     <div className="col-md-6">
                         <div className="form-group">
                             <label htmlFor="date">List Image</label>
-                            <input type="text" className="form-control" name="img" value={inputs.values ? inputs.values.img : ""} onChange={handleChange} id="img" placeholder="Image" required />
+                            <input type="text" tabIndex={2} className="form-control" name="img" value={inputs.values ? inputs.values.img : ""} onChange={handleChange} id="img" placeholder="Image" required />
                             <span className="text-danger">{inputs.errors ? inputs.errors.img : ""}</span>
                         </div>
                         <div className="form-group">
                             <label htmlFor="date">Detail Image</label>
-                            <input type="text" className="form-control" name="mainImg" value={inputs.values ? inputs.values.mainImg : ""} onChange={handleChange} id="mainImg" placeholder="Image" required />
+                            <input type="text" tabIndex={4} className="form-control" name="mainImg" value={inputs.values ? inputs.values.mainImg : ""} onChange={handleChange} id="mainImg" placeholder="Image" required />
                             <span className="text-danger">{inputs.errors ? inputs.errors.mainImg : ""}</span>
                         </div>
                         <div className="form-group">
                             <label htmlFor="tags">Tags</label>
-                            <input type="text" className="form-control"
+                            <input type="text" tabIndex={6} className="form-control"
                                 name="tags" value={inputs.values ? inputs.values.tags : ""} onChange={handleChange} id="tags" placeholder="Tags" required />
                             <span className="text-danger">{inputs.errors ? inputs.errors.tags : ""}</span>
                         </div>
                     </div>
                     <div className="col-md-12 pb-5">
                         <Editor
+                            tabIndex={7}
                             wrapperClassName="wrapper-class"
                             editorClassName="wrapper-editor"
                             editorState={editorState}
-                            onEditorStateChange={(editor) => setEditorState(editor)}
+                            onEditorStateChange={(editor) => { setEditorState(editor); }}
                         />
+                        {(!(editorState.getCurrentContent().hasText()) && isDirty) ? <span className="text-danger">Text is Required.</span> : ""}
                         <div className="pull-right pt-4">
                             <button type="submit" className="btn btn-primary mr-2">Save</button>
                             <button type="button" className="btn btn-primary mr-2" onClick={() => alert("implementation pending")}>Publish</button>
+                            <button type="button" className="btn btn-primary mr-2" onClick={clear}>Clear</button>
                         </div>
                         <div className="clearfix" />
                     </div>
@@ -199,9 +226,4 @@ const AddPost = () => {
         </div>
     );
 };
-// }
-// const mapStateToProps = (state: any) => ({
-//     todos: state.post
-// })
-// export default connect(mapStateToProps)(AddPost);
 export default AddPost;

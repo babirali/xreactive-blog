@@ -9,7 +9,9 @@ const useForm = (callback, formData) => {
     const [submit, setSubmit] = useState(0);
 
     useEffect(() => {
-        callback();
+        if (isDirty) {
+            callback();
+        }
     }, [submit]);
 
     const validateInputs = () => {
@@ -17,20 +19,22 @@ const useForm = (callback, formData) => {
         let _errors = {};
         let i = 0;
         async.forEachOf(inputs.validations, (value, key, callbackFn) => {
-            const inputRequired = inputs.validations[key].required;
-            const inputPattern = inputs.validations[key].pattern;
+            const inputRequired = inputs.validations[key].required.flag;
+
             const inputValue = inputs.values[key];
             let inputeError = "";
 
             if (inputRequired) {
                 if (inputValue === "" || inputValue === undefined || inputValue === null) {
-                    inputeError = "Required";
+                    inputeError = inputs.validations[key].required.message;
                 }
             }
-            if (inputValue && inputPattern !== "" && new RegExp(inputPattern).test(inputValue) === false) {
-                inputeError = "Invalid";
+            if ("pattern" in inputs.validations[key]) {
+                const inputPattern = inputs.validations[key].pattern.flag;
+                if (inputValue && inputPattern !== "" && new RegExp(inputPattern).test(inputValue) === false) {
+                    inputeError = inputs.validations[key].pattern.message;
+                }
             }
-
             _errors = { ..._errors, [key]: inputeError };
             i++;
             if (i === Object.keys(inputs.validations).length) {
@@ -58,30 +62,40 @@ const useForm = (callback, formData) => {
         validateInputs();
     };
 
+    const clearForm = () => {
+        setInputs(formData);
+        setIsDirty(false);
+        setformValid(false);
+    };
+
     const handleChange = (event) => {
         setIsDirty(true);
         let inputeError = "";
-        const InputName = event.target.name;
+        const inputName = event.target.name;
         const inputValue = event.target.value;
-        const inputRequired = event.target.required;
-        const inputPattern = event.target.pattern;
+        // const inputRequired = event.target.required;
+        // const inputPattern = event.target.pattern;
+        const inputRequired = inputs.validations[inputName].required.flag;
         event.persist();
         if (inputRequired) {
             if (inputValue === "" || inputValue === undefined || inputValue === null) {
-                inputeError = "Required";
+                inputeError = inputs.validations[inputName].required.message;
             }
         }
-        if (inputValue && inputPattern !== "" && new RegExp(inputPattern).test(inputValue) === false) {
-            inputeError = "Invalid";
+        if ("pattern" in inputs.validations[inputName]) {
+            const inputPattern = inputs.validations[inputName].pattern.flag;
+            if (inputValue && inputPattern !== "" && new RegExp(inputPattern).test(inputValue) === false) {
+                inputeError = inputs.validations[inputName].pattern.message;
+            }
         }
         setInputs((inputs) => ({
             values: {
                 ...inputs.values,
-                [InputName]: inputValue
+                [inputName]: inputValue
             },
             errors: {
                 ...inputs.errors,
-                [InputName]: inputeError
+                [inputName]: inputeError
             },
             validations: {
                 ...inputs.validations
@@ -90,6 +104,7 @@ const useForm = (callback, formData) => {
     };
     return {
         handleSubmit,
+        clearForm,
         handleChange,
         inputs,
         isDirty,

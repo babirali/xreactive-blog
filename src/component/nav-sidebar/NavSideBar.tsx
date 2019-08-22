@@ -11,6 +11,7 @@ class NavSidebar extends Component {
             <div>
                 <Link className="nav-link" to="/listpost">List Post</Link>
                 <Link className="nav-link" to="/addpost">Add Post</Link>
+                <Link className="nav-link" to="/imagelist">Images List</Link>
                 <Link className="nav-link" to="/category">Category</Link>
                 <Link className="nav-link" to="/tags">Tags</Link>
                 <a className="nav-link" href="" onClick={() => authService.logout()}>Log Out</a>

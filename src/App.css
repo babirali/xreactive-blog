@@ -23,7 +23,7 @@
 
 .sidenav {
   height: 100%;
-  width: 160px;
+  width: 14%;
   position: fixed;
   z-index: 0;
   top: 0;
@@ -45,10 +45,11 @@
 }
 
 .main {
-  margin-left: 160px;
+  margin-left: 14%;
   /* Same as the width of the sidenav */
   /* Increased text to enable scrolling */
   padding: 0px 10px;
+  width: 85%;
 }
 
 @media screen and (max-height: 450px) {
