@@ -40,7 +40,7 @@ const test: any = {
 };
 import { switchMap, map } from "rxjs/operators";
 import SideBar from "./component/side-bar/SideBar";
-import ImageList from "./page-admin/image-list/Image-list";
+import ImageList from "./page-admin/image-list/ImageList";
 
 // initialize store
 const store = createStore(reducer, test);
