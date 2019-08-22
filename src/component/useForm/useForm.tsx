@@ -1,25 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 
+import async from "async";
+
 const useForm = (callback, formData) => {
     const [inputs, setInputs] = useState<any>(formData);
-    const [formValid, setformValid] = useState(true);
+    const [formValid, setformValid] = useState(false);
     const [isDirty, setIsDirty] = useState(false);
+    const [submit, setSubmit] = useState(0);
 
-    // useEffect(() => {
-    //     formCallBack();
-    // }, [inputs.errors]);
-
-    // useEffect(() => {
-    //     if (isDirty) {
-    //         setDisable(validateInputs());
-    //     }
-    // }, [inputs, isDirty]);
+    useEffect(() => {
+        callback();
+    }, [submit]);
 
     const validateInputs = () => {
         // tslint:disable-next-line: variable-name
         let _errors = {};
         let i = 0;
-        Object.keys(inputs.validations).forEach((key) => {
+        async.forEachOf(inputs.validations, (value, key, callbackFn) => {
             const inputRequired = inputs.validations[key].required;
             const inputPattern = inputs.validations[key].pattern;
             const inputValue = inputs.values[key];
@@ -33,6 +30,7 @@ const useForm = (callback, formData) => {
             if (inputValue && inputPattern !== "" && new RegExp(inputPattern).test(inputValue) === false) {
                 inputeError = "Invalid";
             }
+
             _errors = { ..._errors, [key]: inputeError };
             i++;
             if (i === Object.keys(inputs.validations).length) {
@@ -45,7 +43,12 @@ const useForm = (callback, formData) => {
                         ...inputs.validations
                     }
                 }));
+                const isValid = Object.values(_errors).every((x) => (x === null || x === ""));
+                setformValid(isValid);
+                callbackFn("1");
             }
+        }, (err) => {
+            setSubmit(Math.random());
         });
     };
 
@@ -53,11 +56,6 @@ const useForm = (callback, formData) => {
         setIsDirty(true);
         event.preventDefault();
         validateInputs();
-        callback(inputs);
-    };
-
-    const formCallBack = () => {
-        callback(inputs);
     };
 
     const handleChange = (event) => {

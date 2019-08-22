@@ -89,17 +89,23 @@ const AddPost = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [date, setDate] = useState(new Date());
     const save = () => {
-        // tslint:disable-next-line: no-console
-        console.log(inputs); console.log("formValid " + formValid); console.log("isDirty " + isDirty);
-        // this.setState({ content: JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent())) });
-        // spinnerService.showLoading(true);
-        // axios.post(process.env.API_ENDPOINT + "api/posts/save", this.state).then((response: any) => {
-        //     toast.success("Saved Successfully");
-        //     spinnerService.showLoading(false);
-        // }).catch((error: any) => {
-        //     toast.error("Error");
-        //     // console.log(error);
-        // });
+        if (formValid) {
+            spinnerService.showLoading(true);
+            let data = inputs.values;
+            data = {
+                ...data,
+                content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+                date
+            };
+            axios.post(process.env.API_ENDPOINT + "api/posts/save", data).then((response: any) => {
+                toast.success("Saved Successfully");
+                spinnerService.showLoading(false);
+            }).catch((error: any) => {
+                toast.error("Error");
+                // console.log(error);
+            });
+        }
+
     };
     const formData = {
         values: {
@@ -109,13 +115,6 @@ const AddPost = () => {
             postBy: "",
             tags: ""
         },
-        // errors: {
-        //     heading: "",
-        //     img: "",
-        //     mainImg: "",
-        //     postBy: "",
-        //     tags: ""
-        // },
         validations: {
             heading: {
                 required: true,
@@ -135,7 +134,6 @@ const AddPost = () => {
             }
         }
     };
-    const test = () => null;
     const { inputs, handleChange, handleSubmit, formValid, isDirty } = useForm(save, formData);
     // render() {
     return (
