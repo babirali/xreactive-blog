@@ -2,6 +2,9 @@ const router = require('express').Router();
 const azureStorage = require('azure-storage');
 const getStream = require('into-stream');
 const multer = require('multer');
+const Jimp = require('jimp');
+const fs = require('fs');
+
 const inMemoryStorage = multer.memoryStorage();
 const singleFileUpload = multer({ storage: inMemoryStorage });
 
@@ -44,7 +47,26 @@ const getBlobName = originalName => {
 
 const imageUpload = async (req, res, next) => {
     try {
-        const image = await uploadFileToBlob('images', req.file); // images is a directory in the Azure container
+        // Jimp.read(req.file.buffer).then(image => {
+        //     thumbnail = image
+        //         .resize(256, 256)
+        //         .quality(60)
+        //         .write('upload-images/lena-half-bw.png');
+        // }).catch(err => {
+        //     console.log(err);
+        // });
+        // fs.readFile('upload-images/lena-half-bw.png', function (err, data) {
+        //     if (!err) {
+        //         console.log('received data: ' + data.buffer);
+        //         // response.writeHead(200, { 'Content-Type': 'text/html' });
+        //         // response.write(data);
+        //         // response.end();
+        //     } else {
+        //         console.log(err);
+        //     }
+        // });
+        // const image = await uploadFileToBlob('thumbnails', thumbnail);
+        const image = await uploadFileToBlob('images', req.file);
         return res.json(image);
     } catch (error) {
         next(error);
