@@ -8,6 +8,7 @@ import { CombineLatestSubscriber } from "rxjs/internal/observable/combineLatest"
 const ImageList = () => {
     const [file, setFile] = useState(new File([""], ""));
     const [images, setImages] = useState([]);
+    const [disable, setDisable] = useState(true);
 
     useEffect(() => {
         loadImages();
@@ -17,12 +18,10 @@ const ImageList = () => {
         const preview = document.querySelector("#img");
         const file = e.target.files[0];
         const reader = new FileReader();
-
         reader.onloadend = () => {
             // @ts-ignore
             preview.src = reader.result;
         };
-
         if (file) {
             reader.readAsDataURL(file);
         } else {
@@ -50,6 +49,7 @@ const ImageList = () => {
             toast.success("Saved Successfully");
             loadImages();
             spinnerService.showLoading(false);
+            cancel();
         }).catch((error: any) => {
             toast.error("Error");
             // console.log(error);
@@ -58,7 +58,7 @@ const ImageList = () => {
 
     const deleteImage = (name) => {
         const data = {
-            name
+            name: name.replace("thumbnails", "")
         };
         axios.post(process.env.API_ENDPOINT + "api/upload/delete", data).then((response: any) => {
             loadImages();
@@ -69,33 +69,41 @@ const ImageList = () => {
         });
     };
     const copyToClipboard = (url) => {
-        // url = `https://xreactive.blob.core.windows.net/prod/` + url;
         const ele = document.getElementById(url);
         // @ts-ignore
         ele.select();
         document.execCommand("copy");
     };
+    const cancel = () => {
+        setFile(new File([""], ""));
+        const preview = document.querySelector("#img");
+        // @ts-ignore
+        preview.src = "";
+        setDisable(true);
+    }
     return (
         <div>
             <form id="upload-form" action="" encType="multipart/form-data">
-                <h2>Select an image to upload:</h2>
-                <div className="upload-container">
-                    <input id="file-picker" type="file" name="image" onChange={(e) => { setFile(e.target.files[0]); previewFile(e); }} />
-                    <img id="img" src="" style={{ width: "150px" }} />
-                </div>
-                <div>
-                    <input type="button" value="Upload Image" onClick={uploadAction} />
-                </div>
+                <h2>Images</h2>
+                <input id="file-picker" type="file" name="image" onChange={(e) => { setFile(e.target.files[0]); previewFile(e); setDisable(false); }} />
+                <img id="img" src="" style={{ width: "150px" }} />
+                <button className="btn btn-primary" type="button" onClick={uploadAction} disabled={disable}>Upload Image</button>
+                <button className="btn btn-primary" type="button" onClick={cancel}>Cancel</button>
             </form>
             {
                 images.map((img, i) => {
                     return (
-                        <div className="image-p">
-                            <img key={i} src={`https://xreactive.blob.core.windows.net/prod/` + img.name} onClick={() => deleteImage(img.name)} />
-                            <div className="copy">
-                                <input id={img.name} type="text" readOnly value={`https://xreactive.blob.core.windows.net/prod/` + img.name} />
+                        <div className="image-p m-1">
+                            <img key={i} src={`https://xreactive.blob.core.windows.net/prod/` + img.name} />
+                            <div className="hd">
+                                <div className="copy-text">
+                                    <input className="input-m" id={img.name} type="text" readOnly value={`https://xreactive.blob.core.windows.net/prod/` + img.name.replace("thumbnails", "images")} />
+                                </div>
                                 {document.queryCommandSupported("copy") &&
-                                    <button onClick={() => copyToClipboard(img.name)}>Copy URL</button>
+                                    <div className="copy pb-1 pt-1">
+                                        <i className="fa fa-clipboard ci" aria-hidden="true" onClick={() => copyToClipboard(img.name)} />
+                                        <i className="fa fa-trash ci-del" aria-hidden="true" onClick={() => deleteImage(img.name)} />
+                                    </div>
                                 }
                             </div>
                         </div>

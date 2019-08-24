@@ -69,11 +69,11 @@ class App extends Component<any, any> {
               </div>
               : ""}
             {authService.isAuthenticated ?
-              <div>
-                <div className="sidenav">
+              <div className="row  m-0 min-vh-100">
+                <div className="sidenav col-2">
                   <NavSidebar />
                 </div>
-                <div className="main">
+                <div className="main col-10">
                   <PrivateRoute path="/listpost" component={ListPost} />
                   <PrivateRoute path="/addpost" exact component={AddPost} />
                   <PrivateRoute path="/imagelist" exact component={ImageList} />

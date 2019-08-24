@@ -3,7 +3,7 @@ const azureStorage = require('azure-storage');
 const getStream = require('into-stream');
 const multer = require('multer');
 const Jimp = require('jimp');
-const fs = require('fs');
+const stream = require('stream');
 
 const inMemoryStorage = multer.memoryStorage();
 const singleFileUpload = multer({ storage: inMemoryStorage });
@@ -16,14 +16,33 @@ const azureStorageConfig = {
 };
 const blobService = azureStorage.createBlobService(azureStorageConfig.accountName, azureStorageConfig.accountKey);
 
+const getBlobName = originalName => {
+    const identifier = Math.random().toString().replace(/0\./, ''); // remove "0." from start of string
+    return `${identifier}-${originalName}`;
+};
 
-uploadFileToBlob = async (directoryPath, file) => {
-
+uploadThumbnailToBlob = async (directoryPath, file, lenght, blobName) => {
     return new Promise((resolve, reject) => {
-        const blobName = getBlobName(file.originalname);
+        blobService.createBlockBlobFromStream(azureStorageConfig.containerName, `${directoryPath}/${blobName}`, file, lenght, err => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve({
+                    filename: blobName,
+                    originalname: "xreactive",
+                    size: lenght,
+                    path: `${azureStorageConfig.containerName}/${directoryPath}/${blobName}`,
+                    url: `${azureStorageConfig.blobURL}${azureStorageConfig.containerName}/${directoryPath}/${blobName}`
+                });
+            }
+        });
+    });
+};
+
+uploadFileToBlob = async (directoryPath, file, blobName) => {
+    return new Promise((resolve, reject) => {
         const stream = getStream(file.buffer);
         const streamLength = file.buffer.length;
-
         blobService.createBlockBlobFromStream(azureStorageConfig.containerName, `${directoryPath}/${blobName}`, stream, streamLength, err => {
             if (err) {
                 reject(err);
@@ -40,33 +59,21 @@ uploadFileToBlob = async (directoryPath, file) => {
     });
 };
 
-const getBlobName = originalName => {
-    const identifier = Math.random().toString().replace(/0\./, ''); // remove "0." from start of string
-    return `${identifier}-${originalName}`;
-};
-
 const imageUpload = async (req, res, next) => {
     try {
-        // Jimp.read(req.file.buffer).then(image => {
-        //     thumbnail = image
-        //         .resize(256, 256)
-        //         .quality(60)
-        //         .write('upload-images/lena-half-bw.png');
-        // }).catch(err => {
-        //     console.log(err);
-        // });
-        // fs.readFile('upload-images/lena-half-bw.png', function (err, data) {
-        //     if (!err) {
-        //         console.log('received data: ' + data.buffer);
-        //         // response.writeHead(200, { 'Content-Type': 'text/html' });
-        //         // response.write(data);
-        //         // response.end();
-        //     } else {
-        //         console.log(err);
-        //     }
-        // });
-        // const image = await uploadFileToBlob('thumbnails', thumbnail);
-        const image = await uploadFileToBlob('images', req.file);
+        const blobName = getBlobName(req.file.originalname);
+        Jimp.read(req.file.buffer).then(thumbnail => {
+            thumbnail.resize(Jimp.AUTO, 200);
+            thumbnail.quality(1);
+            thumbnail.getBuffer(Jimp.MIME_PNG, (err, d) => {
+                const readStream = stream.PassThrough();
+                readStream.end(d);
+                uploadThumbnailToBlob('thumbnails', readStream, d.length, blobName);
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+        const image = await uploadFileToBlob('images', req.file, blobName);
         return res.json(image);
     } catch (error) {
         next(error);
@@ -76,15 +83,18 @@ const imageUpload = async (req, res, next) => {
 router.post('/', singleFileUpload.single('image'), imageUpload);
 
 router.get('/getall', (req, res, next) => {
-    blobService.listBlobsSegmented(azureStorageConfig.containerName, null, (err, data) => {
+    // blobService.listBlobsSegmented(azureStorageConfig.containerName, null, (err, data) => {
+    //     return res.json(data.entries);
+    // });
+    blobService.listBlobsSegmentedWithPrefix(azureStorageConfig.containerName, 'thumbnails', null, (err, data) => {
         return res.json(data.entries);
     });
 });
 
 router.post('/delete', (req, res, next) => {
-    blobService.deleteBlob(azureStorageConfig.containerName, req.body.name, (err, data) => {
-        return res.json(data);
-    });
+    blobService.deleteBlob(azureStorageConfig.containerName, ('thumbnails' + req.body.name), (err, data) => { });
+    blobService.deleteBlob(azureStorageConfig.containerName, ('images' + req.body.name), (err, data) => { });
+    return res.json("sucess");
 });
 
 

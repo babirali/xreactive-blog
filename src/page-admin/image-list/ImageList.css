@@ -3,10 +3,52 @@
     display: inline-block;
 }
 
+.image-p:hover .hd {
+    display: block;
+}
+
+.hd {
+    display: none
+}
+
 .copy {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    background: #d6c1c194;
+}
+
+.copy-text {
     position: absolute;
     top: 0;
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+.input-m {
+    color: transparent;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+}
+
+.input-m:focus {
+    outline: none;
+}
+
+.input-m::selection {
+    background: transparent;
+}
+
+.ci {
+    color: #000;
+    cursor: pointer;
+}
+
+.ci-del {
+    color: red;
+    cursor: pointer;
 }
