@@ -98,35 +98,31 @@ const AddPost = () => {
             heading: {
                 required: {
                     flag: true,
-                    message: "Image is required"
+                    message: "Heading is required"
                 }
             },
             img: {
                 required: {
                     flag: true,
-                    message: "Image is required"
-                },
-                pattern: {
-                    flag: "test",
-                    message: "Invalid URL"
+                    message: "List Image is required"
                 }
             },
             mainImg: {
                 required: {
                     flag: true,
-                    message: "Image is required"
+                    message: "Main Image is required"
                 }
             },
             postBy: {
                 required: {
                     flag: true,
-                    message: "Image is required"
+                    message: "Post by is required"
                 }
             },
             tags: {
                 required: {
                     flag: true,
-                    message: "Image is required"
+                    message: "tags is required"
                 }
             }
         }

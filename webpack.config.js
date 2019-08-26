@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var API_ENDPOINT = {
     production: "",
@@ -53,12 +54,14 @@ module.exports = {
         }),
         new webpack.EnvironmentPlugin({
             API_ENDPOINT: API_ENDPOINT[environment],
-            //NODE_ENV: API_URL[environment], // use 'development' unless process.env.NODE_ENV is defined
             DEBUG: false
         }),
         new MiniCssExtractPlugin({
             filename: '[chunkhash].css',
-        })
+        }),
+        new CopyWebpackPlugin([
+            { from: 'src/assets/img', to: 'images' }
+        ]),
     ],
     optimization: {
         moduleIds: 'hashed',

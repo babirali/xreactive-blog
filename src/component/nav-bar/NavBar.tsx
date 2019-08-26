@@ -7,10 +7,10 @@ class NavBar extends Component<any, any> {
     render() {
         return (
             <div>
-                <nav className="navbar navbar-expand-lg bg-color pt-5 pb-5">
+                <nav className="navbar navbar-expand-lg bg-color pt-5 pb-3">
                     <div className="container">
+                        <Link className="" to="/"><img className="navbar-brand" src={require("../../assets/img/xreact-logo.png")} alt="" style={{ width: 50 }} /></Link>
                         {/* <Link className="navbar-brand" to="/">XReactive</Link> */}
-                        <img className="navbar-brand" src={require("../../assets/img/xreact-logo.png")} alt="" style={{ width: 50 }} />
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                             {/* <span className="navbar-toggler-icon" /> */}
                             <i className="fa fa-bars" style={{ color: "#35bdb2" }} />

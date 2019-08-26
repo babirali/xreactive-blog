@@ -47,3 +47,7 @@ az container create --resource-group xreactive --name xreactive --image babirali
 
 db.runCommand("xreactive",{ shardcollection : "xreactive.test", key : { _id : "hashed" }})
 
+
+https://www.freecodecamp.org/news/the-css-handbook-a-handy-guide-to-css-for-developers-b56695917d11/#positioning
+https://www.freecodecamp.org/news/introduction-to-mongoose-for-mongodb-d2a7aa593c57/
+

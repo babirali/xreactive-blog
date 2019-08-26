@@ -8,8 +8,8 @@ const PostsSchema = new Schema({
     date: String,
     img: String,
     content: String,
-    mainImg:String,
-    xid:String
+    mainImg: String,
+    tags: String
 });
 
 mongoose.model('Posts', PostsSchema);

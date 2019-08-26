@@ -8,7 +8,6 @@ router.get('/', auth.optional, (req, res, next) => {
 });
 
 router.post('/save', auth.optional, (req, res, next) => {
-    req.body.xid = 'test';
     const postData = new Posts(req.body);
     postData.save().then(() => {
         console.log('saved');
