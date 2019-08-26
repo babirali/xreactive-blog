@@ -41,5 +41,9 @@ docker build -t babirali/xreactive:1 .
 
 docker push babirali/xreactive
 
-az container create --resource-group xreactive --name xreactive --image babirali/xreactive --ports 80 --dns-name-label xreactive --cpu 1 --memory 1 --os-type Linux 
+az container delete --resource-group xreactive --name xreactive
+
+az container create --resource-group xreactive --name xreactive --image babirali/xreactive --ports 80 --dns-name-label xreactive --cpu 1 --memory 2 --os-type Linux 
+
+db.runCommand("xreactive",{ shardcollection : "xreactive.test", key : { _id : "hashed" }})
 

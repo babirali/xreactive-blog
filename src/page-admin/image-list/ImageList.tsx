@@ -80,7 +80,7 @@ const ImageList = () => {
         // @ts-ignore
         preview.src = "";
         setDisable(true);
-    }
+    };
     return (
         <div>
             <form id="upload-form" action="" encType="multipart/form-data">
