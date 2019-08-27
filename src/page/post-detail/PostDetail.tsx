@@ -28,8 +28,6 @@ class PostDetail extends Component<any, any> {
       spinnerService.showLoading(false);
       this.setState({ post: response.data });
       this.setState({ editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(this.state.post.content))) });
-      // const rawContentState = convertToRaw(this.state.editorState.getCurrentContent());
-      // this.setState({ content: stateToHTML(this.state.editorState.getCurrentContent()) });
     }).catch((error: any) => {
       // console.log(error);
     });
@@ -41,14 +39,12 @@ class PostDetail extends Component<any, any> {
           <title>{this.state.post.heading}</title>
           <meta name="description" content={this.state.post.tags} />
         </Helmet>
-        <h1 className="mt-4">{this.state.post.heading}</h1>
+        <h2 className="h-text mt-4">{this.state.post.heading}</h2>
         <b>Posted on {moment(this.state.post.date).format("MM/DD/YYYY")} {this.state.post.min} min read</b>
-        {/* <hr /> */}
         <p className="lead">
           By <a href="#"> {this.state.post.postBy}</a>
         </p>
         <img className="img-fluid rounded" src={this.state.post.mainImg} alt="" />
-        {/* <div dangerouslySetInnerHTML={{ __html: this.state.content }}></div> */}
         <Editor
           editorState={this.state.editorState}
           toolbarHidden

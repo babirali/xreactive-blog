@@ -98,46 +98,25 @@ const AddPost = () => {
         },
         validations: {
             heading: {
-                required: {
-                    flag: true,
-                    message: "Heading is required"
-                }
+                required: { flag: true, message: "Heading is required" }
             },
             img: {
-                required: {
-                    flag: true,
-                    message: "List Image is required"
-                }
+                required: { flag: true, message: "List Image is required" }
             },
             mainImg: {
-                required: {
-                    flag: true,
-                    message: "Main Image is required"
-                }
+                required: { flag: true, message: "Main Image is required" }
             },
             postBy: {
-                required: {
-                    flag: true,
-                    message: "Post by is required"
-                }
+                required: { flag: true, message: "Post by is required" }
             },
             tags: {
-                required: {
-                    flag: true,
-                    message: "tags is required"
-                }
+                required: { flag: true, message: "tags is required" }
             },
             min: {
-                required: {
-                    flag: true,
-                    message: "min is required"
-                }
+                required: { flag: true, message: "min is required" }
             },
             homePageText: {
-                required: {
-                    flag: true,
-                    message: "Home Page Text is required"
-                }
+                required: { flag: true, message: "Home Page Text is required" }
             }
         }
     };
@@ -223,7 +202,7 @@ const AddPost = () => {
                             name="homePageText" value={inputs.values ? inputs.values.homePageText : ""} onChange={handleChange} id="homePageText" placeholder="Home Page Text" required />
                         <span className="text-danger">{inputs.errors ? inputs.errors.homePageText : ""}</span>
                     </div>
-                    <div className="col-md-12 pb-5">
+                    <div className="col-md-12">
                         <Editor
                             tabIndex={9}
                             wrapperClassName="wrapper-class"
@@ -232,12 +211,13 @@ const AddPost = () => {
                             onEditorStateChange={(editor) => { setEditorState(editor); }}
                         />
                         {(!(editorState.getCurrentContent().hasText()) && isDirty) ? <span className="text-danger">Text is Required.</span> : ""}
+                    </div>
+                    <div className="col-md-12 pb-5">
                         <div className="pull-right pt-4">
                             <button type="submit" className="btn btn-primary mr-2">Save</button>
                             <button type="button" className="btn btn-primary mr-2" onClick={() => alert("implementation pending")}>Publish</button>
                             <button type="button" className="btn btn-primary mr-2" onClick={clear}>Clear</button>
                         </div>
-                        <div className="clearfix" />
                     </div>
                 </div>
             </form>

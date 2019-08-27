@@ -25,6 +25,23 @@ h4 {
 }
 
 .text-hidden {
-    height: 100px;
+    height: 52px;
     text-align: justify;
+}
+
+.card-text {
+    color: #757575;
+    font-size: 15px;
+    overflow-y: hidden
+}
+
+.card-title {
+    font-family: 'Patua One', cursive;
+    cursor: pointer;
+}
+
+.img-l {
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
 }
