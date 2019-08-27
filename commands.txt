@@ -37,7 +37,7 @@ mongodump --host xreactive-mongodb.documents.azure.com --port 10255 --username x
 docker run -e ME_CONFIG_MONGODB_SERVER=10.0.75.1 -p 8081:8081 mongo-express
 
 #az container show --resource-group xreactive --name testing-container-instance --output table
-docker build -t babirali/xreactive:1 .
+docker build -t babirali/xreactive .
 
 docker push babirali/xreactive
 

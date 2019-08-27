@@ -99,7 +99,8 @@ const ImageList = () => {
                                 <div className="copy-text">
                                     <input className="input-m" id={img.name} type="text" readOnly value={`https://xreactive.blob.core.windows.net/prod/` + img.name.replace("thumbnails", "images")} />
                                 </div>
-                                {document.queryCommandSupported("copy") &&
+                                {
+                                    document.queryCommandSupported("copy") &&
                                     <div className="copy pb-1 pt-1">
                                         <i className="fa fa-clipboard ci" aria-hidden="true" onClick={() => copyToClipboard(img.name)} />
                                         <i className="fa fa-trash ci-del" aria-hidden="true" onClick={() => deleteImage(img.name)} />

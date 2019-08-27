@@ -42,7 +42,7 @@ class PostDetail extends Component<any, any> {
           <meta name="description" content={this.state.post.tags} />
         </Helmet>
         <h1 className="mt-4">{this.state.post.heading}</h1>
-        <b>Posted on {moment(this.state.post.date).format("MM/DD/YYYY")} 3 min read</b>
+        <b>Posted on {moment(this.state.post.date).format("MM/DD/YYYY")} {this.state.post.min} min read</b>
         {/* <hr /> */}
         <p className="lead">
           By <a href="#"> {this.state.post.postBy}</a>

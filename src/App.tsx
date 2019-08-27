@@ -84,7 +84,7 @@ class App extends Component<any, any> {
               :
               <div>
                 <NavBar />
-                <div className="container" style={{ paddingBottom: "30px" }}>
+                <div className="container min-vh-100" style={{ paddingBottom: "30px" }}>
                   <div className="row">
                     <div className="col-md-9">
                       <Route path="/" exact component={Home} />

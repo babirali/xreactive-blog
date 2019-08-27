@@ -9,7 +9,9 @@ const PostsSchema = new Schema({
     img: String,
     content: String,
     mainImg: String,
-    tags: String
+    tags: String,
+    min: String,
+    homePageText: String
 });
 
 mongoose.model('Posts', PostsSchema);

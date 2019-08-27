@@ -10,13 +10,10 @@ class SideBar extends Component<any, any> {
                     <div className="card-body p-0">
                         <div className="input-group">
                             <input type="text" className="form-control" placeholder="Search Post" />
-                            {/* <span className="input-group-btn">
-                                <button className="btn btn-primary" type="button">Go!</button>
-                            </span> */}
                         </div>
                     </div>
                 </div>
-                <div className="card my-4 border-0">
+                {/* <div className="card my-4 border-0">
                     <h5 className="card-header text-uppercase border-0 text-dark">Categories</h5>
                     <div className="card-body p-0">
                         <div className="row">
@@ -53,7 +50,7 @@ class SideBar extends Component<any, any> {
                             <i className="fa fa-twitter" aria-hidden="true"></i>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         );
     }

@@ -11,7 +11,9 @@ class Post extends Component<any, any> {
                 </div>
                 <div className="card-block p-2">
                     <h3 className="card-title pb-2" id="test" style={{ lineHeight: 1.2 }}>{this.props.post.heading}</h3>
-                    {/* <p className="card-text" dangerouslySetInnerHTML={{ __html: this.props.post.content.substring(3, 99) }} /> */}
+                    <div className="h-50 overflow-hidden">
+                        <p className="card-text text-hidden"> {this.props.post.homePageText}</p>
+                    </div>
                     <Link className="link small" to={"/post/" + this.props.post._id}>
                         Read More <span className="pl-1">⟶</span>
                     </Link>

@@ -92,7 +92,9 @@ const AddPost = () => {
             img: "",
             mainImg: "",
             postBy: "",
-            tags: ""
+            tags: "",
+            min: "",
+            homePageText: ""
         },
         validations: {
             heading: {
@@ -123,6 +125,18 @@ const AddPost = () => {
                 required: {
                     flag: true,
                     message: "tags is required"
+                }
+            },
+            min: {
+                required: {
+                    flag: true,
+                    message: "min is required"
+                }
+            },
+            homePageText: {
+                required: {
+                    flag: true,
+                    message: "Home Page Text is required"
                 }
             }
         }
@@ -160,50 +174,58 @@ const AddPost = () => {
             <h1>Add Post</h1>
             <form onSubmit={handleSubmit} noValidate>
                 <div className="row">
-                    <div className="col-md-6">
-                        <div className="form-group">
-                            <label htmlFor="heading">Heading</label>
-                            <input type="text" tabIndex={1} className="form-control" name="heading" value={inputs.values ? inputs.values.heading : ""} onChange={handleChange} id="heading" aria-describedby="heading" placeholder="Heading" required />
-                            <span className="text-danger">{inputs.errors ? inputs.errors.heading : ""}</span>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="by">By</label>
-                            <input type="text" tabIndex={3} className="form-control" name="postBy" value={inputs.values ? inputs.values.postBy : ""} onChange={handleChange} id="postBy" placeholder="Name" required />
-                            <span className="text-danger">{inputs.errors ? inputs.errors.postBy : ""}</span>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="date">Date</label>
-                            <DatePicker
-                                tabIndex={5}
-                                name="date"
-                                className="form-control"
-                                selected={date}
-                                onChange={(d) => { setDate(d); }}
-                            />
-                            {((date === null || date === undefined) && isDirty) ? <span className="text-danger">Text is Required.</span> : ""}
-                        </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="heading">Heading</label>
+                        <input type="text" tabIndex={1} className="form-control" name="heading" value={inputs.values ? inputs.values.heading : ""} onChange={handleChange} id="heading" aria-describedby="heading" placeholder="Heading" required />
+                        <span className="text-danger">{inputs.errors ? inputs.errors.heading : ""}</span>
                     </div>
-                    <div className="col-md-6">
-                        <div className="form-group">
-                            <label htmlFor="date">List Image</label>
-                            <input type="text" tabIndex={2} className="form-control" name="img" value={inputs.values ? inputs.values.img : ""} onChange={handleChange} id="img" placeholder="Image" required />
-                            <span className="text-danger">{inputs.errors ? inputs.errors.img : ""}</span>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="date">Detail Image</label>
-                            <input type="text" tabIndex={4} className="form-control" name="mainImg" value={inputs.values ? inputs.values.mainImg : ""} onChange={handleChange} id="mainImg" placeholder="Image" required />
-                            <span className="text-danger">{inputs.errors ? inputs.errors.mainImg : ""}</span>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="tags">Tags</label>
-                            <input type="text" tabIndex={6} className="form-control"
-                                name="tags" value={inputs.values ? inputs.values.tags : ""} onChange={handleChange} id="tags" placeholder="Tags" required />
-                            <span className="text-danger">{inputs.errors ? inputs.errors.tags : ""}</span>
-                        </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="by">By</label>
+                        <input type="text" tabIndex={2} className="form-control" name="postBy" value={inputs.values ? inputs.values.postBy : ""} onChange={handleChange} id="postBy" placeholder="Name" required />
+                        <span className="text-danger">{inputs.errors ? inputs.errors.postBy : ""}</span>
+                    </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="date">Date</label>
+                        <DatePicker
+                            tabIndex={3}
+                            name="date"
+                            className="form-control"
+                            selected={date}
+                            onChange={(d) => { setDate(d); }}
+                        />
+                        {((date === null || date === undefined) && isDirty) ? <span className="text-danger">Text is Required.</span> : ""}
+                    </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="date">List Image</label>
+                        <input type="text" tabIndex={4} className="form-control" name="img" value={inputs.values ? inputs.values.img : ""} onChange={handleChange} id="img" placeholder="Image" required />
+                        <span className="text-danger">{inputs.errors ? inputs.errors.img : ""}</span>
+                    </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="date">Detail Image</label>
+                        <input type="text" tabIndex={5} className="form-control" name="mainImg" value={inputs.values ? inputs.values.mainImg : ""} onChange={handleChange} id="mainImg" placeholder="Image" required />
+                        <span className="text-danger">{inputs.errors ? inputs.errors.mainImg : ""}</span>
+                    </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="tags">Tags</label>
+                        <input type="text" tabIndex={6} className="form-control"
+                            name="tags" value={inputs.values ? inputs.values.tags : ""} onChange={handleChange} id="tags" placeholder="Tags" required />
+                        <span className="text-danger">{inputs.errors ? inputs.errors.tags : ""}</span>
+                    </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="tags">Mins</label>
+                        <input type="text" tabIndex={7} className="form-control"
+                            name="min" value={inputs.values ? inputs.values.min : ""} onChange={handleChange} id="min" placeholder="Min" required />
+                        <span className="text-danger">{inputs.errors ? inputs.errors.min : ""}</span>
+                    </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="tags">Home Page Text</label>
+                        <textarea tabIndex={8} className="form-control"
+                            name="homePageText" value={inputs.values ? inputs.values.homePageText : ""} onChange={handleChange} id="homePageText" placeholder="Home Page Text" required />
+                        <span className="text-danger">{inputs.errors ? inputs.errors.homePageText : ""}</span>
                     </div>
                     <div className="col-md-12 pb-5">
                         <Editor
-                            tabIndex={7}
+                            tabIndex={9}
                             wrapperClassName="wrapper-class"
                             editorClassName="wrapper-editor"
                             editorState={editorState}

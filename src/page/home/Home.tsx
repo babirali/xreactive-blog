@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import "./Home.css";
 import { spinnerService } from "../../service/spinner";
+import { Helmet } from "react-helmet";
 
 class Home extends Component<any, any> {
   constructor(props: any) {
@@ -27,6 +28,10 @@ class Home extends Component<any, any> {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>Tutorials on JavaScript, React, Angular and more</title>
+          <meta name="description" content="Tutorials on JavaScript, React, Angular and more" />
+        </Helmet>
         {this.state.post.map((post: any, index: number) => {
           return <Post post={post} key={index} />;
         }
