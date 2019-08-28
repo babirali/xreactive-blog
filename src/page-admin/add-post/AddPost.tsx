@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -94,7 +94,8 @@ const AddPost = () => {
             postBy: "",
             tags: "",
             min: "",
-            homePageText: ""
+            homePageText: "",
+            category: ""
         },
         validations: {
             heading: {
@@ -116,6 +117,9 @@ const AddPost = () => {
                 required: { flag: true, message: "min is required" }
             },
             homePageText: {
+                required: { flag: true, message: "Home Page Text is required" }
+            },
+            category: {
                 required: { flag: true, message: "Home Page Text is required" }
             }
         }
@@ -147,6 +151,19 @@ const AddPost = () => {
         clearForm();
         setEditorState(EditorState.createEmpty());
     };
+    const [categories, setCategories] = useState([]);
+    const getCategories = () => {
+        spinnerService.showLoading(true);
+        axios.get(process.env.API_ENDPOINT + "api/category").then((response: any) => {
+            setCategories(response.data);
+            spinnerService.showLoading(false);
+        }).catch((error: any) => {
+            // console.log(error);
+        });
+    };
+    useEffect(() => {
+        getCategories();
+    }, []);
     return (
         <div>
             <ToastContainer />
@@ -197,14 +214,24 @@ const AddPost = () => {
                         <span className="text-danger">{inputs.errors ? inputs.errors.min : ""}</span>
                     </div>
                     <div className="form-group col-md-6">
+                        <label htmlFor="tags">Category</label>
+                        <select tabIndex={8} className="form-control" id="category" name="category" value={inputs.values ? inputs.values.category : ""} onChange={handleChange}>
+                            <option value="" disabled>Select Category</option>
+                            {categories.map((c, i) =>
+                                <option key={i} value={c.name}>{c.name}</option>
+                            )}
+                        </select>
+                        <span className="text-danger">{inputs.errors ? inputs.errors.category : ""}</span>
+                    </div>
+                    <div className="form-group col-md-6">
                         <label htmlFor="tags">Home Page Text</label>
-                        <textarea tabIndex={8} className="form-control"
+                        <textarea tabIndex={9} className="form-control"
                             name="homePageText" value={inputs.values ? inputs.values.homePageText : ""} onChange={handleChange} id="homePageText" placeholder="Home Page Text" required />
                         <span className="text-danger">{inputs.errors ? inputs.errors.homePageText : ""}</span>
                     </div>
                     <div className="col-md-12">
                         <Editor
-                            tabIndex={9}
+                            tabIndex={10}
                             wrapperClassName="wrapper-class"
                             editorClassName="wrapper-editor"
                             editorState={editorState}

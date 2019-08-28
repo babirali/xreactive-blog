@@ -18,25 +18,15 @@ if (process.env.PORT == 3022) {
 
 mongoose.set('debug', true);
 
-// const initDb = require("./db").initDb; 
-// const getDb = require("./db").getDb;
-
-// Get our API routes
-// const api = require('./routes/api');
-
 const app = express();
 
 app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, './build'))); // Point static path to dist
+app.use(express.static(path.join(__dirname, './build'))); // Point static path to build
 app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
-// Set our api routes
-// app.use('/api', api);
-
-require('./models/users');
-require('./models/posts');
+require('./models');
 require('./config/passport');
 app.use(require('./routes'));
 
@@ -52,6 +42,4 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-// initDb(function (err) {
 server.listen(port, () => console.log(`API running on localhost:${port}`));
-// });
