@@ -1,6 +1,24 @@
 .card-header {
-    font-family: 'Teko', sans-serif !important;
+    font-family: 'Patua One', cursive;
     letter-spacing: 1px !important;
     background-color: #fff;
     padding-left: 0 !important;
+    font-size: 20px !important;
+}
+
+.cat-link {
+    font-size: 20px;
+    font-family: 'Teko', sans-serif;
+}
+
+.cat-link:hover {
+    text-decoration: none;
+}
+
+.twitter-social {
+    cursor: pointer;
+}
+
+.twitter-social:hover {
+    color: #1da1f2;
 }

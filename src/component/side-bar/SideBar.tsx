@@ -35,7 +35,7 @@ const SideBar = () => {
                             <ul className="list-unstyled mb-0">
                                 {categories.map((c, i) =>
                                     <li key={i}>
-                                        <a href="" onClick={(e) => e.preventDefault()}>{c.name}</a>
+                                        <a className="cat-link" href="" onClick={(e) => e.preventDefault()}>{c.name}</a>
                                     </li>
                                 )}
                             </ul>
@@ -43,15 +43,15 @@ const SideBar = () => {
                     </div>
                 </div>
             </div>
-            {/* <div className="card mb-4 border-0">
-                    <h5 className="card-header border-0 text-uppercase text-dark">Social</h5>
-                    <div className="card-body p-0">
-                        <div className="social-part ml-auto">
-                            <i className="fa fa-facebook" aria-hidden="true"></i>
-                            <i className="fa fa-twitter" aria-hidden="true"></i>
-                        </div>
+            <div className="card mb-4 border-0">
+                <h5 className="card-header border-0 text-uppercase text-dark">Social</h5>
+                <div className="card-body p-0">
+                    <div className="social-part ml-auto">
+                        {/* <i className="fa fa-facebook twitter-social" aria-hidden="true"></i> */}
+                        <i className="fa fa-twitter twitter-social" aria-hidden="true"></i>
                     </div>
-                </div> */}
+                </div>
+            </div>
         </div>
     );
 };
