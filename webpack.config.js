@@ -14,7 +14,7 @@ var environment = process.env.NODE_ENV == 'production' ? 'production' : 'develop
 
 module.exports = {
     entry: './src/index.tsx',
-    devtool: "source-map",
+    // devtool: "source-map",
     devServer: {
         historyApiFallback: true,
         contentBase: './',

@@ -37,9 +37,9 @@ class PostDetail extends Component<any, any> {
           <meta name="description" content={this.state.post.tags} />
         </Helmet>
         <h2 className="h-text mt-4">{this.state.post.heading}</h2>
-        <b>Posted on {moment(this.state.post.date).format("MM/DD/YYYY")} {this.state.post.min} min read</b>
+        <b>Posted on {moment(this.state.post.date).format("MM/DD/YYYY")} - {this.state.post.min} Mins Read</b>
         <p className="lead">
-          By <a href="#"> {this.state.post.postBy}</a>
+          By <a href="https://twitter.com/babirali001" target="_blank"> {this.state.post.postBy}</a>
         </p>
         <img className="img-fluid rounded" src={this.state.post.mainImg} alt="" />
         <Editor
