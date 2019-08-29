@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import SideBar from "../../component/side-bar/SideBar";
 import Post from "../../component/post/Post";
 import Pagination from "../../component/pagination/Pagination";
 import { connect } from "react-redux";
@@ -29,7 +28,7 @@ class Home extends Component<any, any> {
     return (
       <div>
         <Helmet>
-          <title>Tutorials on JavaScript, React, Angular and more</title>
+          <title>XRecative - Tutorials on JavaScript, React, Angular and more</title>
           <meta name="description" content="Tutorials on JavaScript, React, Angular and more" />
         </Helmet>
         {this.state.post.map((post: any, index: number) => {

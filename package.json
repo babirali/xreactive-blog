@@ -4,12 +4,11 @@
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --mode development --open --hot",
-    "start:n": "cross-env NODE_ENV=development next",
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "test": "jest",
     "eject": "react-scripts eject",
-    "server:dev": "cross-env PORT=3022 nodemon server/index.js",
-    "server": "cross-env PORT=80 node server/index.js",
+    "server:dev": "nodemon server/index.js",
+    "server": "node server/index.js",
     "tslint": "tslint -c tslint.json 'src/**/*.tsx'",
     "prettier": "prettier --check 'src/**/*.tsx'"
   },
@@ -65,6 +64,7 @@
     "bootstrap": "^4.2.1",
     "cors": "^2.8.5",
     "cross-env": "^5.2.0",
+    "dotenv": "^8.1.0",
     "draft-js": "^0.11.0",
     "express": "^4.16.4",
     "express-jwt": "^5.3.1",

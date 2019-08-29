@@ -6,17 +6,15 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 const session = require('express-session');
 const mongoose = require('mongoose');
+require('dotenv').config()
 
 //Configure Mongoose
 if (process.env.PORT == 3022) {
-    mongoose.connect('mongodb://10.0.75.1/xreactive', { useNewUrlParser: true });
-    // mongoose.connect('mongodb://xreactive-mongodb:uTEXzzvZ8qCATRALDJGpP8HqklCHtqXxAc7DQUOzb88WT6vQNVLb7KMNcSrfsLjc98xF55oOp890cusk4WWTlg==@xreactive-mongodb.documents.azure.com:10255/xreactive?ssl=true&replicaSet=globaldb', { useNewUrlParser: true });
+    mongoose.connect(process.env.MONGODB, { useNewUrlParser: true });
+    mongoose.set('debug', true);
 } else {
-    mongoose.connect('mongodb://xreactive-mongodb:uTEXzzvZ8qCATRALDJGpP8HqklCHtqXxAc7DQUOzb88WT6vQNVLb7KMNcSrfsLjc98xF55oOp890cusk4WWTlg==@xreactive-mongodb.documents.azure.com:10255/xreactive?ssl=true&replicaSet=globaldb', { useNewUrlParser: true });
+    mongoose.connect(process.env.MONGODB_PROD, { useNewUrlParser: true });
 }
-
-
-mongoose.set('debug', true);
 
 const app = express();
 
@@ -30,14 +28,12 @@ require('./models');
 require('./config/passport');
 app.use(require('./routes'));
 
-app.use(express.static(path.join(__dirname, 'routes/api/uploads')))
-
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './build/index.html'));
 });
 
-const port = process.env.PORT || '3022';
+const port = process.env.PORT;
 app.set('port', port);
 
 const server = http.createServer(app);

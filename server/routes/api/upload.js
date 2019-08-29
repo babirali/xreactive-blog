@@ -9,10 +9,10 @@ const inMemoryStorage = multer.memoryStorage();
 const singleFileUpload = multer({ storage: inMemoryStorage });
 
 const azureStorageConfig = {
-    accountName: "xreactive",
-    accountKey: "cdx2XEfpeaP3hDYQr4AYizgQdd8h4lp8fZlJtHCztbbVZOwXsVfe0ugdNmYAA3O9tk0oUgktO0BSzmoBhureyw==",
-    blobURL: "https://xreactive.blob.core.windows.net",
-    containerName: "prod"
+    accountName: process.env.AZURE_ACCOUNT_NAME,
+    accountKey: process.env.AZURE_ACCOUNT_KEY,
+    blobURL: process.env.AZURE_BLOB_URL,
+    containerName: process.env.AZURE_BLOB_CONTAINER
 };
 const blobService = azureStorage.createBlobService(azureStorageConfig.accountName, azureStorageConfig.accountKey);
 

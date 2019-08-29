@@ -23,7 +23,13 @@ router.get('/get/:id', (req, res, next) => {
 router.get('/delete/:id', (req, res, next) => {
     Posts.findOneAndRemove({ _id: req.params.id }).then(response => {
         return res.json('Deleted')
-    })
-        .catch(err => { console.error(err) })
+    }).catch(err => { console.error(err) })
 });
+
+router.get('/getpostbycategory/:category', (req, res, next) => {
+    Posts.find({ category: req.params.category }).then(response => {
+        return res.json(response)
+    }).catch(err => { console.error(err) })
+});
+
 module.exports = router;

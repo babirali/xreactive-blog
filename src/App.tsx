@@ -41,6 +41,7 @@ const test: any = {
 import { switchMap, map } from "rxjs/operators";
 import SideBar from "./component/side-bar/SideBar";
 import ImageList from "./page-admin/image-list/ImageList";
+import PostByCategory from "./page/post-by-category/PostByCategory";
 
 // initialize store
 const store = createStore(reducer, test);
@@ -89,7 +90,8 @@ class App extends Component<any, any> {
                     <div className="col-md-9">
                       <Route path="/" exact component={Home} />
                       <Route path="/about" exact component={About} />
-                      <Route path="/post/:category?/:id?" exact component={PostDetail} />
+                      <Route path="/post/:category/:id" exact component={PostDetail} />
+                      <Route path="/post/:category" exact component={PostByCategory} />
                       <Route path="/login" exact component={Login} />
                     </div>
                     <SideBar />
