@@ -9,7 +9,7 @@ import Popper from "popper.js";
 import Home from "./page/home/Home";
 import NavBar from "./component/nav-bar/NavBar";
 import Footer from "./component/footer/Footer";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import About from "./page/about/About";
 import PostDetail from "./page/post-detail/PostDetail";
 import AddPost from "./page-admin/add-post/AddPost";
@@ -89,7 +89,7 @@ class App extends Component<any, any> {
                     <div className="col-md-9">
                       <Route path="/" exact component={Home} />
                       <Route path="/about" exact component={About} />
-                      <Route path="/post/:id?" exact component={PostDetail} />
+                      <Route path="/post/:category?/:id?" exact component={PostDetail} />
                       <Route path="/login" exact component={Login} />
                     </div>
                     <SideBar />

@@ -4,11 +4,9 @@ import "./PostDetail.css";
 // import ListComment from "../../component/list-comment/ListComment";
 // import { throws } from "assert";
 import { EditorState, convertFromRaw } from "draft-js";
-// import { stateToHTML } from "draft-js-export-html";
 import { spinnerService } from "../../service/spinner";
 import axios from "axios";
 import moment from "moment";
-import draftToHtml from "draftjs-to-html";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Helmet } from "react-helmet";
@@ -18,7 +16,6 @@ class PostDetail extends Component<any, any> {
     this.state = {
       post: {
       },
-      // content: "",/
       editorState: "",
     };
   }

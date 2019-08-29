@@ -1,14 +1,12 @@
-import React, { Component, useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./AddPost.css";
 import { spinnerService } from "../../service/spinner";
-import { Observable, Subject } from "rxjs";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Draft, { EditorState, RichUtils, AtomicBlockUtils, convertFromRaw, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw } from "draft-js";
 // function myBlockRenderer(contentBlock) {
 //     const type = contentBlock.getType();
 //     if (type === "atomic") {
@@ -114,7 +112,7 @@ const AddPost = () => {
                 required: { flag: true, message: "tags is required" }
             },
             min: {
-                required: { flag: true, message: "min is required" }
+                required: { flag: true, message: "Minuts Read is required" }
             },
             homePageText: {
                 required: { flag: true, message: "Home Page Text is required" }
@@ -208,9 +206,9 @@ const AddPost = () => {
                         <span className="text-danger">{inputs.errors ? inputs.errors.tags : ""}</span>
                     </div>
                     <div className="form-group col-md-6">
-                        <label htmlFor="tags">Mins</label>
+                        <label htmlFor="tags">Minuts Read</label>
                         <input type="text" tabIndex={7} className="form-control"
-                            name="min" value={inputs.values ? inputs.values.min : ""} onChange={handleChange} id="min" placeholder="Min" required />
+                            name="min" value={inputs.values ? inputs.values.min : ""} onChange={handleChange} id="min" placeholder="Minuts Read" required />
                         <span className="text-danger">{inputs.errors ? inputs.errors.min : ""}</span>
                     </div>
                     <div className="form-group col-md-6">
