@@ -6,7 +6,7 @@ class Footer extends Component<any, any> {
         return (
             <footer className="py-2 bg-color footer">
                 <div className="container">
-                    <p className="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+                    <p className="m-0 text-center text-white">Copyright &copy; xreactive.com 2019</p>
                 </div>
             </footer>
         );

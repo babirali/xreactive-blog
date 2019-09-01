@@ -68,6 +68,19 @@ const useForm = (callback, formData) => {
         setformValid(false);
     };
 
+    const setValues = (values) => {
+        setInputs((inputs) => (
+            {
+                values: {
+                    ...values,
+                },
+                validations: {
+                    ...inputs.validations
+                }
+            }
+        ));
+    };
+
     const handleChange = (event) => {
         setIsDirty(true);
         let inputeError = "";
@@ -108,7 +121,8 @@ const useForm = (callback, formData) => {
         handleChange,
         inputs,
         isDirty,
-        formValid
+        formValid,
+        setValues
     };
 };
 export default useForm;

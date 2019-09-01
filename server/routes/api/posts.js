@@ -10,9 +10,27 @@ router.get('/', auth.optional, (req, res, next) => {
 router.post('/save', auth.optional, (req, res, next) => {
     const postData = new Posts(req.body);
     postData.save().then(() => {
-        console.log('saved');
         return res.json({})
     })
+});
+router.post('/update', auth.optional, (req, res, next) => {
+    // const postData = new Posts(req.body);
+    // postData.update();
+    // Posts.update(req.body);
+    Posts.
+    findOneAndUpdate(
+        {
+            _id: req.body._id  // search query
+        },
+        {
+            ...req.body   // field:values to update
+        },
+        {
+            new: true,                       // return updated doc
+        })
+        .then(() => {
+            return res.json({})
+        })
 });
 
 router.get('/get/:id', (req, res, next) => {

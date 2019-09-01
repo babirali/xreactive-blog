@@ -53,7 +53,7 @@ class ListPost extends Component<any, any> {
     }
     render() {
         const columns = [{
-            Cell: (row: any) => (<Link className="link small" to={"/post/" + row.original._id}>{row.original.heading}</Link>),
+            Cell: (row: any) => (<Link className="link small" to={"/editpost/" + row.original._id}>{row.original.heading}</Link>),
             Header: "Heading",
             accessor: "heading",
         }, {

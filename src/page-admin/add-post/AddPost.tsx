@@ -6,7 +6,8 @@ import "./AddPost.css";
 import { spinnerService } from "../../service/spinner";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+
 // function myBlockRenderer(contentBlock) {
 //     const type = contentBlock.getType();
 //     if (type === "atomic") {
@@ -22,7 +23,7 @@ import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import useForm from "../../component/useForm/useForm";
-const AddPost = () => {
+const AddPost = (props) => {
     // editor: any;
     // constructor(props: any) {
     //     super(props);
@@ -84,7 +85,7 @@ const AddPost = () => {
     // handleChange(event: any) {
     //     this.setState({ [event.target.name]: event.target.value });
     // }
-    const formData = {
+    let formData = {
         values: {
             heading: "",
             img: "",
@@ -134,17 +135,27 @@ const AddPost = () => {
                 content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
                 date
             };
-            axios.post(process.env.API_ENDPOINT + "api/posts/save", data).then((response: any) => {
-                toast.success("Saved Successfully");
-                spinnerService.showLoading(false);
-            }).catch((error: any) => {
-                toast.error("Error");
-                // console.log(error);
-            });
+            if (props.match.params.id === undefined) {
+                axios.post(process.env.API_ENDPOINT + "api/posts/save", data).then((response: any) => {
+                    toast.success("Saved Successfully");
+                    spinnerService.showLoading(false);
+                }).catch((error: any) => {
+                    toast.error("Error");
+                    // console.log(error);
+                });
+            } else {
+                axios.post(process.env.API_ENDPOINT + "api/posts/update", data).then((response: any) => {
+                    toast.success("Updated Successfully");
+                    spinnerService.showLoading(false);
+                }).catch((error: any) => {
+                    toast.error("Error");
+                    // console.log(error);
+                });
+            }
         }
 
     };
-    const { inputs, handleChange, handleSubmit, clearForm, formValid, isDirty } = useForm(save, formData);
+    const { inputs, handleChange, handleSubmit, clearForm, formValid, isDirty, setValues } = useForm(save, formData);
     const clear = () => {
         clearForm();
         setEditorState(EditorState.createEmpty());
@@ -161,6 +172,18 @@ const AddPost = () => {
     };
     useEffect(() => {
         getCategories();
+        if (props.match.params.id) {
+            axios.get(process.env.API_ENDPOINT + "api/posts/get/" + props.match.params.id).then((response: any) => {
+                spinnerService.showLoading(false);
+                // this.setState({ post: response.data });
+                setValues(response.data);
+                setDate(new Date(response.data.date));
+                setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(response.data.content))));
+            }).catch((error: any) => {
+                // console.log(error);
+            });
+        }
+
     }, []);
     return (
         <div>

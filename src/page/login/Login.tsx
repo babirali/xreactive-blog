@@ -1,47 +1,51 @@
-import React, { Component } from "react";
+import React from "react";
 import "./Login.css";
 import { spinnerService } from "../../service/spinner";
-import { toast } from "react-toastify";
 import { authService } from "../../service/auth";
-import { Redirect } from "react-router";
-import axios from "axios";
+import useForm from "../../component/useForm/useForm";
+const Login = (props) => {
 
-class Login extends Component<any, any> {
-    constructor(props: any) {
-        super(props);
-        this.state = {};
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        if (authService.isAuthenticated === true) {
-            this.props.history.push("/");
+    const formData = {
+        values: {
+            email: "",
+            password: ""
+        },
+        validations: {
+            email: {
+                required: { flag: true, message: "Email is required" }
+            },
+            password: {
+                required: { flag: true, message: "Password is required" }
+            },
         }
-    }
-
-    handleChange(event: any) {
-        this.setState({ [event.target.name]: event.target.value });
-    }
-    handleSubmit(event: any) {
-        event.preventDefault();
-        spinnerService.showLoading(true);
-        authService.login(this.state, this.props);
-    }
-
-    render() {
-        return (
-            <div className="div">
-                <form>
-                    <div className="form-group">
-                        <label htmlFor="email">Email address</label>
-                        <input type="email" className="form-control" value={this.state.email} onChange={this.handleChange} name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" value={this.state.password} onChange={this.handleChange} name="password" id="password" placeholder="Password" />
-                    </div>
-                    <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Submit</button>
-                </form>
-            </div>
-        );
-    }
-}
+    };
+    const submit = () => {
+        if (formValid) {
+            spinnerService.showLoading(true);
+            authService.login(inputs.values, props);
+        }
+    };
+    const clear = () => {
+        clearForm();
+    };
+    const { inputs, handleChange, handleSubmit, clearForm, formValid, isDirty } = useForm(submit, formData);
+    return (
+        <div className="div">
+            <form>
+                <div className="form-group">
+                    <label htmlFor="email">Email address</label>
+                    <input type="email" className="form-control" value={inputs.values ? inputs.values.email : ""} onChange={handleChange} name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email" />
+                    <span className="text-danger">{inputs.errors ? inputs.errors.email : ""}</span>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input type="password" className="form-control" value={inputs.values ? inputs.values.password : ""} onChange={handleChange} name="password" id="password" placeholder="Password" />
+                    <span className="text-danger">{inputs.errors ? inputs.errors.password : ""}</span>
+                </div>
+                <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                <button type="button" className="ml-2 btn btn-primary" onClick={clear}>Clear</button>
+            </form>
+        </div>
+    );
+};
 export default Login;

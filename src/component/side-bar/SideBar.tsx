@@ -3,6 +3,7 @@ import "./SideBar.css";
 import { spinnerService } from "../../service/spinner";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import AdComponent from "../ad-component/AdComponent";
 
 const SideBar = () => {
     const [categories, setCategories] = useState([]);
@@ -23,8 +24,13 @@ const SideBar = () => {
             <div className="card mb-4 border-0">
                 <h5 className="card-header border-0 text-uppercase text-dark">Search</h5>
                 <div className="card-body p-0">
-                    <div className="input-group">
+                    <div className="input-group position-relative">
                         <input type="text" className="form-control" placeholder="Search Post" />
+                        {/* <div  className="position-absolute">
+                            <p>test</p>
+                            <p>test</p>
+                            <p>test</p>
+                        </div> */}
                     </div>
                 </div>
             </div>

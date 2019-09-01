@@ -3,9 +3,9 @@ import "./App.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.css";
-import jQuery from "jquery";
-import "bootstrap";
-import Popper from "popper.js";
+// import jQuery from "jquery";
+// import "bootstrap";
+// import Popper from "popper.js";
 import Home from "./page/home/Home";
 import NavBar from "./component/nav-bar/NavBar";
 import Footer from "./component/footer/Footer";
@@ -24,9 +24,6 @@ import { authService } from "./service/auth";
 import NavSidebar from "./component/nav-sidebar/NavSideBar";
 import Tags from "./page-admin/tags/Tags";
 import Category from "./page-admin/category/Category";
-import { Observable } from "rxjs";
-import AxiosSubscriber from "./service/axios-subscriber";
-import { fromEvent, interval } from "rxjs";
 const test: any = {
   post: {
     loading: true,
@@ -38,7 +35,6 @@ const test: any = {
     ],
   },
 };
-import { switchMap, map } from "rxjs/operators";
 import SideBar from "./component/side-bar/SideBar";
 import ImageList from "./page-admin/image-list/ImageList";
 import PostByCategory from "./page/post-by-category/PostByCategory";
@@ -77,6 +73,7 @@ class App extends Component<any, any> {
                 <div className="main col-10">
                   <PrivateRoute path="/listpost" component={ListPost} />
                   <PrivateRoute path="/addpost" exact component={AddPost} />
+                  <PrivateRoute path="/editpost/:id" exact component={AddPost} />
                   <PrivateRoute path="/imagelist" exact component={ImageList} />
                   <PrivateRoute path="/tags" component={Tags} />
                   <PrivateRoute path="/category" exact component={Category} />

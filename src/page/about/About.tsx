@@ -4,10 +4,10 @@ const About = (props) => {
     return (
         <div>
             <h3 className="head-a">About</h3>
-            <h5 className="mt-4 mb-4 head-a">I’m a fullstack developer from Pakistan.</h5>
+            {/* <h5 className="mt-4 mb-4 head-a">I’m a fullstack developer from Pakistan.</h5> */}
             <p className="text-a">
-                I am professional full stack developer.I take difficult problems in programming as challenge and love to solve them.
-                it's my passion to convert real world logic into code, which thurst me to write elegant and proficient structural code.
+                I am professional full stack developer. I take difficult problems in programming as challenge and love to solve them.
+                It's my passion to convert real world logic into code, which thurst me to write elegant and proficient structural code.
             </p>
             <p className="text-a">
                 I develop applications in following technologies

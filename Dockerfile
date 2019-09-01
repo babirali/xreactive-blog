@@ -9,8 +9,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3023
-
-#CMD [ "node", "server/index.js" ]
+EXPOSE 80
 
 CMD [ "npm","run", "server" ]
