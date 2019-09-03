@@ -139,6 +139,7 @@ const AddPost = (props) => {
                 axios.post(process.env.API_ENDPOINT + "api/posts/save", data).then((response: any) => {
                     toast.success("Saved Successfully");
                     spinnerService.showLoading(false);
+                    props.history.push("/listpost");
                 }).catch((error: any) => {
                     toast.error("Error");
                     // console.log(error);
@@ -147,6 +148,7 @@ const AddPost = (props) => {
                 axios.post(process.env.API_ENDPOINT + "api/posts/update", data).then((response: any) => {
                     toast.success("Updated Successfully");
                     spinnerService.showLoading(false);
+                    props.history.push("/listpost");
                 }).catch((error: any) => {
                     toast.error("Error");
                     // console.log(error);

@@ -87,7 +87,7 @@ class App extends Component<any, any> {
                     <div className="col-md-9">
                       <Route path="/" exact component={Home} />
                       <Route path="/about" exact component={About} />
-                      <Route path="/post/:category/:id" exact component={PostDetail} />
+                      <Route path="/post/:category/:id/:heading" exact component={PostDetail} />
                       <Route path="/post/:category" exact component={PostByCategory} />
                       <Route path="/login" exact component={Login} />
                     </div>

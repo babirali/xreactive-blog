@@ -13,13 +13,6 @@
     outline: none;
 }
 
-h4 {
-    font-weight: 400;
-    letter-spacing: 0.5px;
-    color: #323d48;
-    line-height: 1.6px;
-}
-
 .link {
     color: #50a1ff;
 }
@@ -36,7 +29,6 @@ h4 {
 }
 
 .card-title {
-    font-family: 'Patua One', cursive;
     cursor: pointer;
 }
 

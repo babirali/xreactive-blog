@@ -21,6 +21,21 @@ code {
   box-shadow: 0 0 0 0.2rem #35bdb240 !important;
   border-color: #35bdb2 !important;
 }
+
 .btn-primary:focus {
   box-shadow: 0 0 0 0.2rem #35bdb240 !important;
+}
+
+h1 {
+  font-family: 'Patua One', cursive;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  font-size: 2rem !important;
+}
+
+.heading-list-post {
+  font-family: 'Patua One', cursive;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  font-size: 1.75rem !important;
 }

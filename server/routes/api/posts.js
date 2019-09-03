@@ -4,7 +4,7 @@ const auth = require('../auth');
 const Posts = mongoose.model('Posts');
 
 router.get('/', auth.optional, (req, res, next) => {
-    return Posts.find().then((posts) => res.json(posts))
+    return Posts.find().sort({ date: -1 }).then((posts) => res.json(posts))
 });
 
 router.post('/save', auth.optional, (req, res, next) => {
@@ -14,20 +14,17 @@ router.post('/save', auth.optional, (req, res, next) => {
     })
 });
 router.post('/update', auth.optional, (req, res, next) => {
-    // const postData = new Posts(req.body);
-    // postData.update();
-    // Posts.update(req.body);
     Posts.
-    findOneAndUpdate(
-        {
-            _id: req.body._id  // search query
-        },
-        {
-            ...req.body   // field:values to update
-        },
-        {
-            new: true,                       // return updated doc
-        })
+        findOneAndUpdate(
+            {
+                _id: req.body._id  // search query
+            },
+            {
+                ...req.body   // field:values to update
+            },
+            {
+                new: true,
+            })
         .then(() => {
             return res.json({})
         })
@@ -45,7 +42,7 @@ router.get('/delete/:id', (req, res, next) => {
 });
 
 router.get('/getpostbycategory/:category', (req, res, next) => {
-    Posts.find({ category: req.params.category }).then(response => {
+    Posts.find({ category: req.params.category }).sort({ date: -1 }).then(response => {
         return res.json(response)
     }).catch(err => { console.error(err) })
 });
